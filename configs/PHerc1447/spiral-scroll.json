@@ -1,0 +1,7 @@
+{"schema_version": 1, "name": "PHerc1447", "voxel_size_um": 8.64,
+ "z_direction_is_top_to_bottom": true, "left_handed_coordinates": false,
+ "base_shape_zyx": [24297, 8343, 8343],
+ "normal_zarr_group": "2", "lasagna_scale": 4,
+ "paths": {"normal_x": "lasagna_inputs/PHerc1447_nx.ome.zarr",
+           "normal_y": "lasagna_inputs/PHerc1447_ny.ome.zarr",
+           "gradient_magnitude": "lasagna_inputs/PHerc1447_grad_mag.ome.zarr"}}

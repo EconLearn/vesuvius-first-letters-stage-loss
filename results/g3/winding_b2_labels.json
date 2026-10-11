@@ -1,0 +1,46 @@
+{
+ "candidate": "$VC_ROOT/work/g3/fit2/flat/it30000.tifxyz",
+ "zband": [
+  11050.0,
+  12300.0
+ ],
+ "mask": "labels",
+ "stride": 4,
+ "cap": 14.0,
+ "window_px": 4000,
+ "step_px": 8,
+ "jump_px": 500,
+ "cap_switch": 3.0,
+ "switch_region": "band",
+ "refs": {
+  "w060": {
+   "samples": 665065,
+   "masked": 29412,
+   "matched_frac": 0.976993226226008,
+   "densest_share": 0.20931666381229663,
+   "n_stretches": 19,
+   "masked_matched": 29195,
+   "switch": {
+    "x": {
+     "p_per_step": 0.04267218083981484,
+     "per_300px": 0.8051163185110657,
+     "pairs": 340456
+    },
+    "z": {
+     "p_per_step": 0.05058636804514593,
+     "per_300px": 0.8572487669634778,
+     "pairs": 340230
+    }
+   },
+   "switch_rate_per_300px_mean": 0.8311825427372718,
+   "on_sheet_le3": 0.5929871516317954,
+   "adherence_le2": 0.4436152857239518,
+   "adherence_le6": 0.9011720658882967
+  }
+ },
+ "pooled": {
+  "switch_p_per_step": 0.04662796061620189,
+  "switch_rate_per_300px": 0.8331445477161818,
+  "densest_share_mean": 0.20931666381229663
+ }
+}

@@ -1,0 +1,20 @@
+--- a/ink8um/inference.py
++++ b/ink8um/inference.py
+@@ -8,7 +8,7 @@
+ * coverage mask = ``max over depth > 0`` followed by a 7x7 elliptical closing;
+ * only 64x64 tiles lying entirely inside the coverage mask are predicted, stride 21;
+ * tile input = uint8 * float32(1/255), fp16 autocast on CUDA, sigmoid;
+-* stitching = sum(prob * gaussian(64, sigma=1 std)/max) / number of overlapping tiles.
++* stitching = sum(prob * g) / sum(g), g = gaussian(64, sigma=1 std)/max (blend-weighted mean).
+ 
+ The result is a float32 probability map at the native pixel resolution of the layers.
+ """
+@@ -167,7 +167,7 @@
+         probs = probs[:, 0].cpu().numpy()
+         for p, (x, y) in zip(probs, xy.numpy()):
+             numerator[y:y + tile_size, x:x + tile_size] += p * blend
+-            count[y:y + tile_size, x:x + tile_size] += 1.0
++            count[y:y + tile_size, x:x + tile_size] += blend
+         done += len(probs)
+         if progress is not None:
+             progress(done, len(points))

@@ -1,0 +1,549 @@
+{
+ "dataset": "$VC_ROOT/data/spiral/PHerc1447surf",
+ "mult": 8,
+ "reps": 6,
+ "overrides": {
+  "z_begin": 13100,
+  "z_end": 14100,
+  "input_use_verified_patches": true,
+  "input_use_tracks": false,
+  "input_use_fibers": false,
+  "input_use_fiber_directions": false,
+  "input_use_pcl_absolute": false,
+  "input_use_pcl_relative": false,
+  "input_use_pcl_same_winding": false,
+  "input_use_pcl_drawn_control_points": false,
+  "input_use_winding_inference": false,
+  "input_use_outer_shell": false,
+  "input_use_normals": true,
+  "input_use_gradient_magnitude": true,
+  "dense_spacing_mode": "grad_mag",
+  "loss_weight_dense_spacing": 0,
+  "loss_weight_shell_outer": 0
+ },
+ "ckpts": {
+  "$VC_ROOT/work/g1g2/runs/g1_fit30k/snap/ckpt_it30000.ckpt": {
+   "iters": 30000,
+   "summary": {
+    "umbilicus": {
+     "mean": 0.0057653943076729774,
+     "sd": 0.0
+    },
+    "INFO_patch_radius": {
+     "mean": 785.9069010416666,
+     "sd": 3.4436566129167807
+    },
+    "INFO_patch_dt": {
+     "mean": 477.5403137207031,
+     "sd": 2.226486100759995
+    },
+    "sym_dirichlet": {
+     "mean": 0.8439804489413897,
+     "sd": 0.018617949096773046
+    },
+    "dense_normals": {
+     "mean": 0.6395184279729923,
+     "sd": 0.002333854314304138
+    },
+    "min_spacing": {
+     "mean": 0.0,
+     "sd": 0.0
+    },
+    "TOTAL_G1_objective": {
+     "mean": 1.489264271222055,
+     "sd": 0.017623916508678134
+    },
+    "dr_per_winding": {
+     "mean": 16.727691650390625,
+     "sd": 0.0
+    }
+   },
+   "reps": [
+    {
+     "umbilicus": 0.0057653943076729774,
+     "INFO_patch_radius": 782.7133178710938,
+     "INFO_patch_dt": 475.81976318359375,
+     "sym_dirichlet": 0.8636552840471268,
+     "INFO_spacing_error": "gradient-magnitude cache is not configured",
+     "dense_normals": 0.6368016358464956,
+     "min_spacing": 0.0,
+     "TOTAL_G1_objective": 1.5062223142012954,
+     "dr_per_winding": 16.727691650390625
+    },
+    {
+     "umbilicus": 0.0057653943076729774,
+     "INFO_patch_radius": 785.5882568359375,
+     "INFO_patch_dt": 479.0599365234375,
+     "sym_dirichlet": 0.8419295400381088,
+     "INFO_spacing_error": "gradient-magnitude cache is not configured",
+     "dense_normals": 0.6388802081346512,
+     "min_spacing": 0.0,
+     "TOTAL_G1_objective": 1.486575142480433,
+     "dr_per_winding": 16.727691650390625
+    },
+    {
+     "umbilicus": 0.0057653943076729774,
+     "INFO_patch_radius": 789.015625,
+     "INFO_patch_dt": 475.4491271972656,
+     "sym_dirichlet": 0.8387800306081772,
+     "INFO_spacing_error": "gradient-magnitude cache is not configured",
+     "dense_normals": 0.6420747842639685,
+     "min_spacing": 0.0,
+     "TOTAL_G1_objective": 1.4866202091798186,
+     "dr_per_winding": 16.727691650390625
+    },
+    {
+     "umbilicus": 0.0057653943076729774,
+     "INFO_patch_radius": 789.8052978515625,
+     "INFO_patch_dt": 480.2981872558594,
+     "sym_dirichlet": 0.8659552037715912,
+     "INFO_spacing_error": "gradient-magnitude cache is not configured",
+     "dense_normals": 0.6378427613526583,
+     "min_spacing": 0.0,
+     "TOTAL_G1_objective": 1.5095633594319224,
+     "dr_per_winding": 16.727691650390625
+    },
+    {
+     "umbilicus": 0.0057653943076729774,
+     "INFO_patch_radius": 787.1614990234375,
+     "INFO_patch_dt": 479.2347717285156,
+     "sym_dirichlet": 0.8377421647310257,
+     "INFO_spacing_error": "gradient-magnitude cache is not configured",
+     "dense_normals": 0.6426320411264896,
+     "min_spacing": 0.0,
+     "TOTAL_G1_objective": 1.4861396001651883,
+     "dr_per_winding": 16.727691650390625
+    },
+    {
+     "umbilicus": 0.0057653943076729774,
+     "INFO_patch_radius": 781.1574096679688,
+     "INFO_patch_dt": 475.3800964355469,
+     "sym_dirichlet": 0.8158204704523087,
+     "INFO_spacing_error": "gradient-magnitude cache is not configured",
+     "dense_normals": 0.6388791371136904,
+     "min_spacing": 0.0,
+     "TOTAL_G1_objective": 1.460465001873672,
+     "dr_per_winding": 16.727691650390625
+    }
+   ]
+  },
+  "$VC_ROOT/work/surf/runs/a_plus/checkpoint_fitted.ckpt": {
+   "iters": 33000,
+   "summary": {
+    "umbilicus": {
+     "mean": 0.004952267627231777,
+     "sd": 0.0
+    },
+    "INFO_patch_radius": {
+     "mean": 780.5015462239584,
+     "sd": 3.658412573514877
+    },
+    "INFO_patch_dt": {
+     "mean": 476.35545857747394,
+     "sd": 2.064796324099998
+    },
+    "sym_dirichlet": {
+     "mean": 0.78701285024484,
+     "sd": 0.016978312675405838
+    },
+    "dense_normals": {
+     "mean": 0.6153948449840149,
+     "sd": 0.0015326682573169063
+    },
+    "min_spacing": {
+     "mean": 0.0,
+     "sd": 0.0
+    },
+    "TOTAL_G1_objective": {
+     "mean": 1.4073599628560867,
+     "sd": 0.016003922612778117
+    },
+    "dr_per_winding": {
+     "mean": 16.74344825744629,
+     "sd": 0.0
+    }
+   },
+   "reps": [
+    {
+     "umbilicus": 0.004952267627231777,
+     "INFO_patch_radius": 777.3529052734375,
+     "INFO_patch_dt": 474.7134704589844,
+     "sym_dirichlet": 0.8029129356145859,
+     "INFO_spacing_error": "gradient-magnitude cache is not configured",
+     "dense_normals": 0.6133006419986486,
+     "min_spacing": 0.0,
+     "TOTAL_G1_objective": 1.4211658452404663,
+     "dr_per_winding": 16.74344825744629
+    },
+    {
+     "umbilicus": 0.004952267627231777,
+     "INFO_patch_radius": 779.7169799804688,
+     "INFO_patch_dt": 477.5472106933594,
+     "sym_dirichlet": 0.7955700159072876,
+     "INFO_spacing_error": "gradient-magnitude cache is not configured",
+     "dense_normals": 0.6153080612421036,
+     "min_spacing": 0.0,
+     "TOTAL_G1_objective": 1.415830344776623,
+     "dr_per_winding": 16.74344825744629
+    },
+    {
+     "umbilicus": 0.004952267627231777,
+     "INFO_patch_radius": 784.5100708007812,
+     "INFO_patch_dt": 475.1558837890625,
+     "sym_dirichlet": 0.7640648633241653,
+     "INFO_spacing_error": "gradient-magnitude cache is not configured",
+     "dense_normals": 0.6166625767946243,
+     "min_spacing": 0.0,
+     "TOTAL_G1_objective": 1.3856797077460214,
+     "dr_per_winding": 16.74344825744629
+    },
+    {
+     "umbilicus": 0.004952267627231777,
+     "INFO_patch_radius": 784.4977416992188,
+     "INFO_patch_dt": 479.2433166503906,
+     "sym_dirichlet": 0.8061603456735611,
+     "INFO_spacing_error": "gradient-magnitude cache is not configured",
+     "dense_normals": 0.6147302221506834,
+     "min_spacing": 0.0,
+     "TOTAL_G1_objective": 1.4258428354514763,
+     "dr_per_winding": 16.74344825744629
+    },
+    {
+     "umbilicus": 0.004952267627231777,
+     "INFO_patch_radius": 781.2998657226562,
+     "INFO_patch_dt": 477.5606384277344,
+     "sym_dirichlet": 0.7787689566612244,
+     "INFO_spacing_error": "gradient-magnitude cache is not configured",
+     "dense_normals": 0.6176082883030176,
+     "min_spacing": 0.0,
+     "TOTAL_G1_objective": 1.4013295125914738,
+     "dr_per_winding": 16.74344825744629
+    },
+    {
+     "umbilicus": 0.004952267627231777,
+     "INFO_patch_radius": 775.6317138671875,
+     "INFO_patch_dt": 473.9122314453125,
+     "sym_dirichlet": 0.7745999842882156,
+     "INFO_spacing_error": "gradient-magnitude cache is not configured",
+     "dense_normals": 0.6147592794150114,
+     "min_spacing": 0.0,
+     "TOTAL_G1_objective": 1.3943115313304588,
+     "dr_per_winding": 16.74344825744629
+    }
+   ],
+   "paired_minus_first": {
+    "umbilicus": {
+     "mean": -0.0008131266804412007,
+     "se": 0.0
+    },
+    "INFO_patch_radius": {
+     "mean": -5.405354817708333,
+     "se": 0.20501877041851863
+    },
+    "INFO_patch_dt": {
+     "mean": -1.1848551432291667,
+     "se": 0.20371764740825388
+    },
+    "sym_dirichlet": {
+     "mean": -0.056967598696549736,
+     "se": 0.00483647113130804
+    },
+    "dense_normals": {
+     "mean": -0.024123582988977432,
+     "se": 0.0003734872245230524
+    },
+    "min_spacing": {
+     "mean": 0.0,
+     "se": 0.0
+    },
+    "TOTAL_G1_objective": {
+     "mean": -0.08190430836596836,
+     "se": 0.005022212411648377
+    },
+    "dr_per_winding": {
+     "mean": 0.015756607055664062,
+     "se": 0.0
+    }
+   }
+  },
+  "$VC_ROOT/work/surf/runs/b_follow/checkpoint_fitted.ckpt": {
+   "iters": 33000,
+   "summary": {
+    "umbilicus": {
+     "mean": 0.005119754350744188,
+     "sd": 0.0
+    },
+    "INFO_patch_radius": {
+     "mean": 7.422847191492717,
+     "sd": 0.36714980470629255
+    },
+    "INFO_patch_dt": {
+     "mean": 2.236194610595703,
+     "sd": 0.07492855457311905
+    },
+    "sym_dirichlet": {
+     "mean": 1.8860700478156407,
+     "sd": 0.06979396189246126
+    },
+    "dense_normals": {
+     "mean": 0.6668500524635116,
+     "sd": 0.0032077274340852574
+    },
+    "min_spacing": {
+     "mean": 0.0,
+     "sd": 0.0
+    },
+    "TOTAL_G1_objective": {
+     "mean": 2.5580398546298966,
+     "sd": 0.07074611703433804
+    },
+    "dr_per_winding": {
+     "mean": 16.46280860900879,
+     "sd": 0.0
+    }
+   },
+   "reps": [
+    {
+     "umbilicus": 0.005119754350744188,
+     "INFO_patch_radius": 6.929831504821777,
+     "INFO_patch_dt": 2.1306345462799072,
+     "sym_dirichlet": 1.8754640221595764,
+     "INFO_spacing_error": "gradient-magnitude cache is not configured",
+     "dense_normals": 0.6653980351984501,
+     "min_spacing": 0.0,
+     "TOTAL_G1_objective": 2.5459818117087707,
+     "dr_per_winding": 16.46280860900879
+    },
+    {
+     "umbilicus": 0.005119754350744188,
+     "INFO_patch_radius": 7.0265116691589355,
+     "INFO_patch_dt": 2.359574317932129,
+     "sym_dirichlet": 1.8526723980903625,
+     "INFO_spacing_error": "gradient-magnitude cache is not configured",
+     "dense_normals": 0.6667701061815023,
+     "min_spacing": 0.0,
+     "TOTAL_G1_objective": 2.524562258622609,
+     "dr_per_winding": 16.46280860900879
+    },
+    {
+     "umbilicus": 0.005119754350744188,
+     "INFO_patch_radius": 7.753225326538086,
+     "INFO_patch_dt": 2.199270486831665,
+     "sym_dirichlet": 1.8619967997074127,
+     "INFO_spacing_error": "gradient-magnitude cache is not configured",
+     "dense_normals": 0.6672562565654516,
+     "min_spacing": 0.0,
+     "TOTAL_G1_objective": 2.5343728106236085,
+     "dr_per_winding": 16.46280860900879
+    },
+    {
+     "umbilicus": 0.005119754350744188,
+     "INFO_patch_radius": 7.5069122314453125,
+     "INFO_patch_dt": 2.2527029514312744,
+     "sym_dirichlet": 1.963636577129364,
+     "INFO_spacing_error": "gradient-magnitude cache is not configured",
+     "dense_normals": 0.6630831863731146,
+     "min_spacing": 0.0,
+     "TOTAL_G1_objective": 2.631839517853223,
+     "dr_per_winding": 16.46280860900879
+    },
+    {
+     "umbilicus": 0.005119754350744188,
+     "INFO_patch_radius": 7.810072898864746,
+     "INFO_patch_dt": 2.2432665824890137,
+     "sym_dirichlet": 1.9721189141273499,
+     "INFO_spacing_error": "gradient-magnitude cache is not configured",
+     "dense_normals": 0.6726882420480251,
+     "min_spacing": 0.0,
+     "TOTAL_G1_objective": 2.649926910526119,
+     "dr_per_winding": 16.46280860900879
+    },
+    {
+     "umbilicus": 0.005119754350744188,
+     "INFO_patch_radius": 7.510529518127441,
+     "INFO_patch_dt": 2.2317187786102295,
+     "sym_dirichlet": 1.790531575679779,
+     "INFO_spacing_error": "gradient-magnitude cache is not configured",
+     "dense_normals": 0.665904488414526,
+     "min_spacing": 0.0,
+     "TOTAL_G1_objective": 2.4615558184450492,
+     "dr_per_winding": 16.46280860900879
+    }
+   ],
+   "paired_minus_first": {
+    "umbilicus": {
+     "mean": -0.0006456399569287896,
+     "se": 0.0
+    },
+    "INFO_patch_radius": {
+     "mean": -778.484053850174,
+     "se": 1.3381332408788738
+    },
+    "INFO_patch_dt": {
+     "mean": -475.3041191101074,
+     "se": 0.8904541723401497
+    },
+    "sym_dirichlet": {
+     "mean": 1.0420895988742511,
+     "se": 0.02476755763774699
+    },
+    "dense_normals": {
+     "mean": 0.027331624490519364,
+     "se": 0.0007836817906224087
+    },
+    "min_spacing": {
+     "mean": 0.0,
+     "se": 0.0
+    },
+    "TOTAL_G1_objective": {
+     "mean": 1.0687755834078416,
+     "se": 0.024968377450482505
+    },
+    "dr_per_winding": {
+     "mean": -0.26488304138183594,
+     "se": 0.0
+    }
+   }
+  },
+  "$VC_ROOT/work/surf/runs/d_release/checkpoint_fitted.ckpt": {
+   "iters": 36000,
+   "summary": {
+    "umbilicus": {
+     "mean": 0.003903565520886332,
+     "sd": 0.0
+    },
+    "INFO_patch_radius": {
+     "mean": 70.0020751953125,
+     "sd": 0.30683217269425944
+    },
+    "INFO_patch_dt": {
+     "mean": 43.40821965535482,
+     "sd": 0.2778605326838269
+    },
+    "sym_dirichlet": {
+     "mean": 1.3483393688996632,
+     "sd": 0.026258684992996537
+    },
+    "dense_normals": {
+     "mean": 0.6050161086022854,
+     "sd": 0.003680237913406714
+    },
+    "min_spacing": {
+     "mean": 0.0,
+     "sd": 0.0
+    },
+    "TOTAL_G1_objective": {
+     "mean": 1.957259043022835,
+     "sd": 0.027465199375896587
+    },
+    "dr_per_winding": {
+     "mean": 16.464574813842773,
+     "sd": 0.0
+    }
+   },
+   "reps": [
+    {
+     "umbilicus": 0.003903565520886332,
+     "INFO_patch_radius": 70.2475814819336,
+     "INFO_patch_dt": 43.472110748291016,
+     "sym_dirichlet": 1.3507574796676636,
+     "INFO_spacing_error": "gradient-magnitude cache is not configured",
+     "dense_normals": 0.6006563547998667,
+     "min_spacing": 0.0,
+     "TOTAL_G1_objective": 1.9553173999884166,
+     "dr_per_winding": 16.464574813842773
+    },
+    {
+     "umbilicus": 0.003903565520886332,
+     "INFO_patch_radius": 69.9455795288086,
+     "INFO_patch_dt": 43.75393295288086,
+     "sym_dirichlet": 1.3327734172344208,
+     "INFO_spacing_error": "gradient-magnitude cache is not configured",
+     "dense_normals": 0.6057102233171463,
+     "min_spacing": 0.0,
+     "TOTAL_G1_objective": 1.9423872060724534,
+     "dr_per_winding": 16.464574813842773
+    },
+    {
+     "umbilicus": 0.003903565520886332,
+     "INFO_patch_radius": 69.94095611572266,
+     "INFO_patch_dt": 43.17121887207031,
+     "sym_dirichlet": 1.3770264387130737,
+     "INFO_spacing_error": "gradient-magnitude cache is not configured",
+     "dense_normals": 0.6061625201255083,
+     "min_spacing": 0.0,
+     "TOTAL_G1_objective": 1.9870925243594684,
+     "dr_per_winding": 16.464574813842773
+    },
+    {
+     "umbilicus": 0.003903565520886332,
+     "INFO_patch_radius": 70.16738891601562,
+     "INFO_patch_dt": 43.5328369140625,
+     "sym_dirichlet": 1.354893445968628,
+     "INFO_spacing_error": "gradient-magnitude cache is not configured",
+     "dense_normals": 0.6017503794282675,
+     "min_spacing": 0.0,
+     "TOTAL_G1_objective": 1.9605473909177817,
+     "dr_per_winding": 16.464574813842773
+    },
+    {
+     "umbilicus": 0.003903565520886332,
+     "INFO_patch_radius": 70.2636489868164,
+     "INFO_patch_dt": 43.53031539916992,
+     "sym_dirichlet": 1.3696151971817017,
+     "INFO_spacing_error": "gradient-magnitude cache is not configured",
+     "dense_normals": 0.6110326386988163,
+     "min_spacing": 0.0,
+     "TOTAL_G1_objective": 1.9845514014014043,
+     "dr_per_winding": 16.464574813842773
+    },
+    {
+     "umbilicus": 0.003903565520886332,
+     "INFO_patch_radius": 69.44729614257812,
+     "INFO_patch_dt": 42.9889030456543,
+     "sym_dirichlet": 1.304970234632492,
+     "INFO_spacing_error": "gradient-magnitude cache is not configured",
+     "dense_normals": 0.6047845352441072,
+     "min_spacing": 0.0,
+     "TOTAL_G1_objective": 1.9136583353974856,
+     "dr_per_winding": 16.464574813842773
+    }
+   ],
+   "paired_minus_first": {
+    "umbilicus": {
+     "mean": -0.0018618287867866457,
+     "se": 0.0
+    },
+    "INFO_patch_radius": {
+     "mean": -715.9048258463541,
+     "se": 1.347362619900896
+    },
+    "INFO_patch_dt": {
+     "mean": -434.1320940653483,
+     "se": 0.8253766228202714
+    },
+    "sym_dirichlet": {
+     "mean": 0.5043589199582735,
+     "se": 0.009755263326287835
+    },
+    "dense_normals": {
+     "mean": -0.03450231937070688,
+     "se": 0.0007655900108591865
+    },
+    "min_spacing": {
+     "mean": 0.0,
+     "se": 0.0
+    },
+    "TOTAL_G1_objective": {
+     "mean": 0.46799477180078003,
+     "se": 0.00999007987196253
+    },
+    "dr_per_winding": {
+     "mean": -0.26311683654785156,
+     "se": 0.0
+    }
+   }
+  }
+ },
+ "seconds": 14.822300434112549
+}
