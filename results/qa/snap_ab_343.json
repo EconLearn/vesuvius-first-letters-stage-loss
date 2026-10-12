@@ -1,0 +1,55 @@
+{
+ "setup": "our q343x flat mesh, unsnapped vs snapped (snap_meshes_nieuwlaar.py defaults, level 0) in grid cols 43300-44260; windows A/B/C rows 0-1536; ink9_s42 + ink9_s43 + dnative z-mean; per-letter box minus own interline / ring (score_matched rules); rule fixed before scoring",
+ "snap": {
+  "frac_with_sheet": 0.95,
+  "median_move_vx": 3.0,
+  "p90_move_vx": 7.4,
+  "frac_already_within_2vx": 0.266,
+  "frac_rejected": 0.143
+ },
+ "primary_d_m2_0_p2": {
+  "A": [
+   0.255,
+   0.295
+  ],
+  "B": [
+   0.632,
+   0.651
+  ],
+  "C": [
+   0.835,
+   0.885
+  ],
+  "pooled_18_letters": [
+   0.582,
+   0.611
+  ],
+  "paired_mean": 0.029,
+  "ci95": [
+   -0.017,
+   0.077
+  ],
+  "letters_improved": "10/18"
+ },
+ "d_m4_to_p4": {
+  "A": [
+   0.076,
+   0.139
+  ],
+  "B": [
+   0.387,
+   0.459
+  ],
+  "C": [
+   0.5,
+   0.558
+  ],
+  "paired_mean": 0.069,
+  "ci95": [
+   0.035,
+   0.103
+  ],
+  "letters_improved": "15/18"
+ },
+ "detail": null
+}

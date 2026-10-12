@@ -1,0 +1,91 @@
+{
+ "tool": "tools/qa/sheet_offset.py",
+ "blocks_per_mesh": {
+  "controls": 16,
+  "ours": 24
+ },
+ "controls_winner_meshes": [
+  {
+   "name": "his_w047",
+   "scroll": "PHerc0343",
+   "shift": 0.0,
+   "chunks": 16,
+   "vertices": 512,
+   "frac_with_sheet": 0.955078125,
+   "frac_on_le2": 0.6993865030674846,
+   "frac_off_ge4": 0.1983640081799591,
+   "median_abs_off": 1.0,
+   "p90_abs_off": 7.5,
+   "signed_median": 0.0
+  },
+  {
+   "name": "his_w047_shift5",
+   "scroll": "PHerc0343",
+   "shift": 5.0,
+   "chunks": 16,
+   "vertices": 780,
+   "frac_with_sheet": 0.9666666666666667,
+   "frac_on_le2": 0.09018567639257294,
+   "frac_off_ge4": 0.7984084880636605,
+   "median_abs_off": 5.0,
+   "p90_abs_off": 7.5,
+   "signed_median": -4.75
+  },
+  {
+   "name": "his_w048",
+   "scroll": "PHerc0343",
+   "shift": 0.0,
+   "chunks": 16,
+   "vertices": 558,
+   "frac_with_sheet": 0.96415770609319,
+   "frac_on_le2": 0.6301115241635687,
+   "frac_off_ge4": 0.24349442379182157,
+   "median_abs_off": 1.5,
+   "p90_abs_off": 8.0,
+   "signed_median": 0.0
+  }
+ ],
+ "our_PHerc0343_meshes": [
+  {
+   "name": "q343x_flat",
+   "scroll": "PHerc0343",
+   "shift": 0.0,
+   "chunks": 24,
+   "vertices": 12960,
+   "frac_with_sheet": 0.9483024691358025,
+   "frac_on_le2": 0.30772986167615946,
+   "frac_off_ge4": 0.5298616761594792,
+   "median_abs_off": 4.0,
+   "p90_abs_off": 10.5,
+   "signed_median": 0.0
+  },
+  {
+   "name": "q343x_src",
+   "scroll": "PHerc0343",
+   "shift": 0.0,
+   "chunks": 24,
+   "vertices": 8649,
+   "frac_with_sheet": 0.9469302809573361,
+   "frac_on_le2": 0.32112332112332115,
+   "frac_off_ge4": 0.5012210012210012,
+   "median_abs_off": 4.0,
+   "p90_abs_off": 10.0,
+   "signed_median": 0.0
+  }
+ ],
+ "our_six_unread_bands_range": {
+  "n": 6,
+  "frac_on_le2": [
+   0.262,
+   0.352
+  ],
+  "frac_off_ge4": [
+   0.499,
+   0.593
+  ],
+  "median_abs_off": [
+   3.5,
+   5.0
+  ]
+ }
+}

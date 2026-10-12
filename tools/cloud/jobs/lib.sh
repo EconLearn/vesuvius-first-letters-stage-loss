@@ -190,6 +190,22 @@ pick_sense() {  # pick_sense TAG DATASET_DIR [STEPS [PICK_SENSE_ARGS...]] : quie
 }
 
 flat_path() { echo "$RW/$1/flat/$1.tifxyz"; }
+snap_path() { echo "$RW/$1/flat/snap/$1.tifxyz"; }
+
+snap_flat() {  # snap_flat SCROLL TAG : move the flat mesh onto the published m7 sheet prediction (opt-in, SNAP=1)
+  # Uses the PHerc0343 winner's snap_meshes.py (MIT, copied with its notice to py/snap_meshes_nieuwlaar.py): every
+  # vertex moves along its normal to the nearest predicted-sheet run centre within +-15 vx; jumps are rejected and the
+  # offset field is smoothed. Measured effect: FINDINGS section 8.
+  local s=$1 tag=$2 src out m7
+  src=$(flat_path "$tag"); out=$(dirname "$(snap_path "$tag")")
+  [ -f "$out/$tag.tifxyz/x.tif" ] && { echo "snap $tag: exists"; return 0; }
+  if [ "$DRY" = 1 ]; then $MOCK snap "$src" "$out/$tag.tifxyz"; return $?; fi
+  m7=$("$PY" "$CLOUD/py/m7path.py" "$s") || return 1
+  mkdir -p "$out/in"; ln -sfn "$src" "$out/in/$tag.tifxyz"; echo "$tag.tifxyz" > "$out/windings.txt"
+  FSSPEC_S3_ANON=true SURF_ZARR="$m7" "$PY" -u "$CLOUD/py/snap_meshes_nieuwlaar.py" "$out/in" "$s" "$out" \
+      --windings "$out/windings.txt" --level 0 --procs "${SNAP_PROCS:-16}"
+  [ -f "$out/$tag.tifxyz/x.tif" ]
+}
 
 flatten_tag() {  # flatten_tag TAG DATASET [EXPECT_IT [VOXEL_UM]]  (official flatten via $READ_DIR/read_flatten.py)
   local tag=$1 ds=$2 exp=${3:-10000} vox=${4:-8.64} out; out=$(flat_path "$1")

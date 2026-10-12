@@ -454,3 +454,11 @@ The following were checked only by mocks or not at all:
 - spiral-fitting imports the villa `vesuvius` package from `../vesuvius` (missing -> ModuleNotFoundError
   `vc3d_fiber_format`). Inside the villa checkout that directory exists; if you point `SPIRAL_FIT_DIR` elsewhere, link it.
 - Watch the job with an alert on the FIRST FAIL line of `STATUS.log`, not only on job end.
+
+## Optional: snap the flat mesh onto the sheet prediction (`SNAP=1`)
+- `SNAP=1 bash jobs/job3_quiet.sh` adds a step between flatten and plan. `py/snap_meshes_nieuwlaar.py` (the PHerc0343
+  winner's script, MIT, licence in its header) moves every vertex of the flat mesh along its normal to the nearest run
+  of the published m7 sheet mask. `py/m7path.py` finds that prediction on the public bucket; it is read on demand,
+  not stored. If the step fails, job 3 screens the unsnapped mesh and says so in STATUS.
+- Effect and limits: FINDINGS §8. Use it with a wider stage-2 depth set (for example `ENS_DEPTHS=-4..4:2` or wider).
+- Cost: about 10 m7 chunks per second per 8 processes; a whole band is roughly 15–40 CPU-minutes (`SNAP_PROCS`).

@@ -513,6 +513,69 @@ Problems I hit on the first real pod, now fixed in the kit:
 - The villa models spent most of their time in CPU normalisation; the fast path (§6.1) cut the screen to about
   0.4 s per valid Mpx per depth on the 4090.
 
+## 8. Is the surface on the sheet? A check, and what snapping buys (`tools/qa/sheet_offset.py`)
+
+The First Letters workflow guide asks people to confirm that the mesh stays on one physical sheet. I wanted a number
+for that. `sheet_offset.py` samples the organisers' m7 surface prediction (a binary sheet mask) along each vertex
+normal, from -15 to +15 voxels, and takes the centre of the nearest sheet. This is the measurement inside the
+PHerc0343 winner's `snap_meshes.py`, run on a sample of 128^3 blocks streamed from the public bucket. Nothing is
+stored.
+
+Controls first [m]:
+- The winner's snapped meshes: 70% and 63% of vertices within 2 voxels of a sheet centre; median offset 1.0 and 1.5.
+- The same mesh pushed 5 voxels along its normal: 9% within 2 voxels, median 5.0, signed median -4.75. The tool
+  recovers the push.
+
+My surfaces [m]: our PHerc0343 surface, and the six unread bands screened in section 7, all sit a median 3.5-5.0
+voxels off the sheet. Only 26-35% of vertices are within 2 voxels, and 50-59% are 4 or more voxels off. That is close
+to random placement. The winner snaps his fitted windings onto the sheet prediction before flattening; I never did.
+
+What snapping buys, on known letters [m]. I snapped our PHerc0343 surface with his script (defaults, level 0) around
+his letters. 95% of vertices found a sheet, with a median move of 3.0 voxels. I then re-rendered three windows with
+the same models and scored each letter box against its own interline boxes and ring (the section 1.7 rules). The
+rule was fixed before scoring: snapping counts as a gain if the mean per-letter contrast rises in at least 2 of the
+3 windows and over all 18 letters.
+
+| Depths | Unsnapped (mean over 18 letters) | Snapped | Per-letter change [95% CI] | Letters improved |
+|---|---|---|---|---|
+| d -2/0/+2 (the screen) | 0.582 | 0.611 | +0.029 [-0.017, 0.077] | 10 of 18 |
+| d -4..+4 | 0.337 | 0.404 | +0.069 [0.035, 0.103] | 15 of 18 |
+
+The rule passes (3 of 3 windows), but the gain at the screen's own depths is within noise. Snapping mainly keeps the
+signal alive away from d = 0 (d +4: 0.10 to 0.27 and 0.24 to 0.48 in two windows). So an off-sheet surface costs less
+than I expected with 66-layer models, and it does not explain why the six bands in section 7 showed no text.
+
+The kit now has an opt-in `SNAP=1` step between flatten and plan (`tools/cloud/py/snap_meshes_nieuwlaar.py`, his MIT
+script with its licence; `py/m7path.py` finds the prediction). If snapping fails, the job screens the unsnapped mesh
+and says so. Pair it with a wider stage-2 depth set.
+
+## 9. A model-free search for lead-based ink in all 21 eligible scrolls (`tools/qa/lead_screen.py`)
+
+Seiler et al. (PLOS ONE 21(9) e0353485, September 2026) showed on a burned model scroll that lead in ink absorbs up
+to about 25 times more X-rays than carbonized papyrus, and is visible at 25 ug/cm2. They note that some Herculaneum
+papyri contain lead and that nobody has searched the collection. If a scroll had lead ink, its letters should be
+bright on the sheet surface in the raw CT, with no ink model needed.
+
+`lead_screen.py` takes random 128^3 CT blocks on papyrus (chosen from the m7 sheet mask) and measures three things:
+how strongly the brightest voxels (above the scroll's 99.9th percentile) concentrate near sheets; how many thin,
+sheet-like bright components sit on the sheets; and saturation near sheets.
+
+Positive control [m]: on PHerc0343 I added +100 grey levels to a striped one-voxel layer on the sheet surface. The
+enrichment went from 1.20 to 2.03, thin bright components from 0.76 to 4.08 per 10^6 sheet voxels, and saturation
+rose 15 times. The screen can see a strong lead-like layer.
+
+Result [m], 24 blocks per scroll: thin bright components 0.6-2.2 per 10^6 sheet voxels in every scroll, including
+two known baselines, except two eligible scrolls at 4.75 and 3.16. On 60 fresh blocks those two gave 0.71 and 1.50,
+against 1.99 and 0.89 for two scrolls from the same scanner settings. They did not replicate. Face-on views of their
+largest bright components show isolated 5-10 voxel specks (inclusions) on ordinary papyrus, not strokes.
+
+Verdict: no eligible scroll shows a strong lead-ink signature. How weak a layer the screen can see [m]: injecting
+weaker layers (about 5% of sheet-surface voxels, 24 blocks) moved the enrichment on an 8.64 um scan from 1.20 to 1.17
+(+25 grey levels), 1.51 (+50) and 1.77 (+75), and on a 9.362 um scan from 0.92 to 0.95, 1.01 and 1.31. The highest
+value among the eligible scrolls was 1.24. So a layer of about +50 grey levels (8.64 um scans) or +75 (9.362 um scans)
+over 5% of the surface would have stood out; weaker or sparser lead is not excluded, and I cannot convert grey levels
+into ug/cm2 for these scans. Each scroll was sampled at about 26 mm^3 of sheet-rich CT. Per-scroll numbers (unread scrolls unnamed) are in `results/qa/lead_screen.json`.
+
 ## Checks that could have failed
 
 - Renderer: the known-answer test fails for the wrong conventions [m].
@@ -523,6 +586,11 @@ Problems I hit on the first real pod, now fixed in the kit:
 - Reverse depth order: 0.4965 [m].
 - Stitching correction with a misaligned W: loses [m].
 - Winding-metric shuffle sabotage: loses [m].
+- Sheet-offset tool: a mesh pushed 5 voxels off the sheet scores 9% on-sheet (vs 70%) and the push is recovered [m].
+- Lead screen: an injected +100 layer raises every statistic, and +50 still raises the enrichment on an 8.64 um scan
+  (+75 on a 9.362 um scan), though not the thin-component count; the two highest scrolls did not replicate [m].
+- A raw-CT intensity profile along the normal could not tell a verified surface from one shifted by half a sheet
+  spacing, so I dropped it and used the sheet prediction instead [m].
 - A position snap that looked like a gain: on adherence, its own random-sign sabotage arm also gained, which voided
   it [m].
 

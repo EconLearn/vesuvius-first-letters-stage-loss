@@ -131,6 +131,11 @@ while [ $# -gt 0 ]; do
   fi
   step "${S}_flatten" 0.15 flatten_tag "$TAG" "$DS" 10000 "${VX[$S]:-8.64}"; rc=$?; stop_if_budget $rc
   [ $rc -eq 0 ] || { status "$S: flatten failed; skipping"; continue; }
+  if [ "${SNAP:-0}" = 1 ]; then
+    step "${S}_snap" 0.3 snap_flat "$S" "$TAG"; rc=$?; stop_if_budget $rc
+    if [ $rc -eq 0 ]; then FLAT=$(snap_path "$TAG"); status "$S: screening the snapped mesh $FLAT"
+    else status "$S: snap failed (rc=$rc); screening the unsnapped mesh"; fi
+  fi
   prefit_next "$NEXT"
   step "${S}_plan" 0.05 $BS plan --scroll "$S" --tifxyz "$FLAT" --out "$W" --strip-cols "$STRIP_COLS" --tile "$TILE"; rc=$?
   stop_if_budget $rc

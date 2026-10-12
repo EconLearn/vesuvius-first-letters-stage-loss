@@ -181,6 +181,15 @@ def config_voxel(dataset):
     return float(f[12]) if f and len(f) > 12 and f[12] not in ('', '-') else 8.64
 
 
+def cmd_snap(argv):
+    """snap SRC_TIFXYZ OUT_TIFXYZ : copy (the real step moves vertices onto the m7 sheet prediction)."""
+    import shutil
+    src, out = argv[0], argv[1]
+    shutil.copytree(src, out, dirs_exist_ok=True)
+    print('mock snap', out)
+    return 0
+
+
 def cmd_inputs(argv):
     kind, d, s, z0, z1 = argv[0], Path(argv[1]), argv[2], argv[3], argv[4]
     ds_name = argv[5] if len(argv) > 5 else d.name
@@ -262,5 +271,5 @@ def cmd_gpu(argv):
 
 if __name__ == '__main__':
     cmd, argv = sys.argv[1], sys.argv[2:]
-    sys.exit(dict(render=cmd_render, sweep=cmd_sweep, fit=cmd_fit, flatten=cmd_flatten, inputs=cmd_inputs,
+    sys.exit(dict(render=cmd_render, sweep=cmd_sweep, fit=cmd_fit, flatten=cmd_flatten, snap=cmd_snap, inputs=cmd_inputs,
                   stage2=cmd_stage2, gpu=cmd_gpu)[cmd](argv))

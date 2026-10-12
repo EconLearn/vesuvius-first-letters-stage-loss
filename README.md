@@ -36,6 +36,13 @@ repeat every measurement. The full write-up, with every number and its CI, is in
 8. A pipeline that screens a whole 1,000-slice band for First Letters on one rented GPU, from fit inputs to
    line-scale strips for a reader, with a cost guard and resumable steps (`tools/cloud/`, FINDINGS §7). Measured on an
    RTX 4090: 1.4–2.3 hours and **$1.25–2.10 per band**, about $0.002 per cm² of surface.
+9. A check of whether a surface sits on the papyrus sheet (`tools/qa/sheet_offset.py`, FINDINGS §8). The winner's
+   snapped PHerc0343 meshes: 63–70% of vertices within 2 voxels of a sheet. My automatic surfaces: **26–35%**, median
+   3.5–5 voxels off. Snapping (his method, now `SNAP=1` in the kit) raised per-letter contrast on his 18 letters by
+   **+0.069** [0.035, 0.103] over d −4..+4, but only +0.029 (not significant) at the screen's depths.
+10. The first systematic search for lead-based ink across all 21 First Letters scrolls, with no ink model
+   (`tools/qa/lead_screen.py`, FINDINGS §9). A planted lead-like layer is detected down to about +50 grey levels
+   (+75 on 9.362 µm scans); no scroll shows such a signature, and the two highest did not replicate.
 
 ## What is here
 
@@ -55,6 +62,7 @@ repeat every measurement. The full write-up, with every number and its CI, is in
 | `tools/vlib/` | Exact AUC, block bootstrap, C2 null, elongation (`metrics.py`, with a self-test); data access; run guards |
 | `tools/ensemble/` | The PHerc0343 pipeline: 66-layer render, depth sweeps for several ink models, ensemble z-maps, matched-null scorer, stage-2 mapping of letter boxes onto an automatic surface, the tile-ranking control, and a GPU fast path for villa inference that is bit-identical to the default path (`speed/`) |
 | `tools/cloud/` | The one-GPU screening pipeline: bootstrap with pinned environments, fit-input builders, fit supervisor, flatten wrapper, band screen and tile ranking, cost guard, jobs, a GPU lock, and a mocked dry run (`tests/dryrun.sh`). See `tools/cloud/RUNBOOK.md` |
+| `tools/qa/` | Surface-on-sheet check against the m7 sheet prediction (with a push-off sabotage arm); model-free lead-ink screen and face-on viewer |
 | `tools/vcpaths.py` | All paths, from environment variables (no machine-specific paths in the code) |
 | `patches/` | v8-in stitching fix (unified diff against the released `ink8um/inference.py`) |
 | `results/` | The result JSONs behind every number in FINDINGS.md (summary numbers only, no scroll data) |

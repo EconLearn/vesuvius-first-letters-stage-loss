@@ -1,0 +1,290 @@
+{
+ "tool": "tools/qa/lead_screen.py (24 blocks per scroll) and tools/qa/lead_faceon.py (replication, 60 fresh blocks)",
+ "positive_control_PHerc0343": {
+  "as_scanned": {
+   "E": 1.197,
+   "flat_per_M": 0.76,
+   "sat": 0.00029
+  },
+  "injected_plus100_layer": {
+   "E": 2.032,
+   "flat_per_M": 4.08,
+   "sat": 0.00443
+  }
+ },
+ "screen": [
+  {
+   "scroll": "PHerc1447",
+   "scan": "8.640um",
+   "blocks": 24,
+   "T_p99_9": 215.0,
+   "E_bright_on_sheet": 0.995,
+   "flat_bright_per_Msheet": 1.26,
+   "sat_frac_near": 0.00046
+  },
+  {
+   "scroll": "PHerc0139",
+   "scan": "9.362um",
+   "blocks": 24,
+   "T_p99_9": 255.0,
+   "E_bright_on_sheet": 0.924,
+   "flat_bright_per_Msheet": 2.2,
+   "sat_frac_near": 0.00104
+  },
+  {
+   "scroll": "eligible_01",
+   "scan": "8.640um",
+   "blocks": 24,
+   "T_p99_9": 204.0,
+   "E_bright_on_sheet": 0.996,
+   "flat_bright_per_Msheet": 1.72,
+   "sat_frac_near": 0.00032
+  },
+  {
+   "scroll": "eligible_02",
+   "scan": "8.640um",
+   "blocks": 24,
+   "T_p99_9": 208.0,
+   "E_bright_on_sheet": 1.131,
+   "flat_bright_per_Msheet": 1.35,
+   "sat_frac_near": 0.00033
+  },
+  {
+   "scroll": "eligible_03",
+   "scan": "8.640um",
+   "blocks": 24,
+   "T_p99_9": 209.0,
+   "E_bright_on_sheet": 0.937,
+   "flat_bright_per_Msheet": 1.6,
+   "sat_frac_near": 0.00037
+  },
+  {
+   "scroll": "eligible_04",
+   "scan": "8.640um",
+   "blocks": 24,
+   "T_p99_9": 211.0,
+   "E_bright_on_sheet": 1.049,
+   "flat_bright_per_Msheet": 0.8,
+   "sat_frac_near": 0.00031
+  },
+  {
+   "scroll": "eligible_05",
+   "scan": "8.640um",
+   "blocks": 24,
+   "T_p99_9": 207.0,
+   "E_bright_on_sheet": 0.947,
+   "flat_bright_per_Msheet": 0.66,
+   "sat_frac_near": 0.00029
+  },
+  {
+   "scroll": "eligible_06",
+   "scan": "8.640um",
+   "blocks": 24,
+   "T_p99_9": 255.0,
+   "E_bright_on_sheet": 0.515,
+   "flat_bright_per_Msheet": 1.18,
+   "sat_frac_near": 0.00129
+  },
+  {
+   "scroll": "eligible_07",
+   "scan": "8.640um",
+   "blocks": 24,
+   "T_p99_9": 211.0,
+   "E_bright_on_sheet": 0.901,
+   "flat_bright_per_Msheet": 1.0,
+   "sat_frac_near": 0.00025
+  },
+  {
+   "scroll": "eligible_08",
+   "scan": "9.362um",
+   "blocks": 24,
+   "T_p99_9": 255.0,
+   "E_bright_on_sheet": 0.894,
+   "flat_bright_per_Msheet": 0.79,
+   "sat_frac_near": 0.00105
+  },
+  {
+   "scroll": "eligible_09",
+   "scan": "9.362um",
+   "blocks": 24,
+   "T_p99_9": 208.0,
+   "E_bright_on_sheet": 1.237,
+   "flat_bright_per_Msheet": 0.99,
+   "sat_frac_near": 0.00059
+  },
+  {
+   "scroll": "eligible_10",
+   "scan": "9.362um",
+   "blocks": 24,
+   "T_p99_9": 241.0,
+   "E_bright_on_sheet": 1.099,
+   "flat_bright_per_Msheet": 4.75,
+   "sat_frac_near": 0.00082
+  },
+  {
+   "scroll": "eligible_11",
+   "scan": "9.362um",
+   "blocks": 24,
+   "T_p99_9": 242.0,
+   "E_bright_on_sheet": 0.88,
+   "flat_bright_per_Msheet": 0.6,
+   "sat_frac_near": 0.00078
+  },
+  {
+   "scroll": "eligible_12",
+   "scan": "8.640um",
+   "blocks": 24,
+   "T_p99_9": 255.0,
+   "E_bright_on_sheet": 0.553,
+   "flat_bright_per_Msheet": 0.73,
+   "sat_frac_near": 0.00224
+  },
+  {
+   "scroll": "eligible_13",
+   "scan": "9.362um",
+   "blocks": 24,
+   "T_p99_9": 224.0,
+   "E_bright_on_sheet": 1.207,
+   "flat_bright_per_Msheet": 3.16,
+   "sat_frac_near": 0.00055
+  },
+  {
+   "scroll": "eligible_14",
+   "scan": "8.640um",
+   "blocks": 24,
+   "T_p99_9": 208.0,
+   "E_bright_on_sheet": 0.871,
+   "flat_bright_per_Msheet": 1.52,
+   "sat_frac_near": 0.00033
+  },
+  {
+   "scroll": "eligible_15",
+   "scan": "9.362um",
+   "blocks": 24,
+   "T_p99_9": 249.0,
+   "E_bright_on_sheet": 0.696,
+   "flat_bright_per_Msheet": 0.68,
+   "sat_frac_near": 0.00069
+  },
+  {
+   "scroll": "eligible_16",
+   "scan": "9.362um",
+   "blocks": 24,
+   "T_p99_9": 232.0,
+   "E_bright_on_sheet": 1.126,
+   "flat_bright_per_Msheet": 1.34,
+   "sat_frac_near": 0.0008
+  },
+  {
+   "scroll": "eligible_17",
+   "scan": "9.362um",
+   "blocks": 24,
+   "T_p99_9": 255.0,
+   "E_bright_on_sheet": 0.971,
+   "flat_bright_per_Msheet": 1.45,
+   "sat_frac_near": 0.00112
+  },
+  {
+   "scroll": "eligible_18",
+   "scan": "9.362um",
+   "blocks": 24,
+   "T_p99_9": 252.0,
+   "E_bright_on_sheet": 0.665,
+   "flat_bright_per_Msheet": 1.02,
+   "sat_frac_near": 0.0007
+  },
+  {
+   "scroll": "eligible_19",
+   "scan": "9.362um",
+   "blocks": 24,
+   "T_p99_9": 229.0,
+   "E_bright_on_sheet": 0.964,
+   "flat_bright_per_Msheet": 1.39,
+   "sat_frac_near": 0.00063
+  },
+  {
+   "scroll": "eligible_20",
+   "scan": "8.640um",
+   "blocks": 24,
+   "T_p99_9": 212.0,
+   "E_bright_on_sheet": 0.86,
+   "flat_bright_per_Msheet": 0.94,
+   "sat_frac_near": 0.00043
+  },
+  {
+   "scroll": "eligible_21",
+   "scan": "9.362um",
+   "blocks": 24,
+   "T_p99_9": 255.0,
+   "E_bright_on_sheet": 0.375,
+   "flat_bright_per_Msheet": 1.29,
+   "sat_frac_near": 0.00091
+  }
+ ],
+ "replication_60_blocks": [
+  {
+   "scroll": "two highest eligible",
+   "flat_per_M": 0.71,
+   "blocks_with_flat": 18,
+   "blocks": 60
+  },
+  {
+   "scroll": "two highest eligible",
+   "flat_per_M": 1.5,
+   "blocks_with_flat": 29,
+   "blocks": 60
+  },
+  {
+   "scroll": "same-scan baseline (eligible)",
+   "flat_per_M": 1.99,
+   "blocks_with_flat": 24,
+   "blocks": 60
+  },
+  {
+   "scroll": "same-scan baseline (eligible)",
+   "flat_per_M": 0.89,
+   "blocks_with_flat": 25,
+   "blocks": 60
+  }
+ ],
+ "verdict": "no eligible scroll shows a lead-ink signature at the measured detection limit (about +50 grey levels on 8.64 um scans, +75 on 9.362 um scans, over ~5% of the sheet surface); the two highest did not replicate",
+ "detection_limit_injections_24_blocks": {
+  "coverage": "striped one-voxel layer, about 5% of sheet-surface voxels",
+  "PHerc0343_8.64um": {
+   "as_scanned_E_12_blocks": 1.197,
+   "+25": {
+    "E": 1.166,
+    "flat_per_M": 1.63
+   },
+   "+50": {
+    "E": 1.512,
+    "flat_per_M": 1.63
+   },
+   "+75": {
+    "E": 1.768,
+    "flat_per_M": 1.78
+   },
+   "+100_12_blocks": {
+    "E": 2.032,
+    "flat_per_M": 4.08
+   }
+  },
+  "PHerc0139_9.362um": {
+   "as_scanned_E": 0.92,
+   "+25": {
+    "E": 0.945,
+    "flat_per_M": 1.91
+   },
+   "+50": {
+    "E": 1.005,
+    "flat_per_M": 1.72
+   },
+   "+75": {
+    "E": 1.312,
+    "flat_per_M": 3.44
+   }
+  },
+  "max_E_eligible": 1.24,
+  "reading": "detected at about +50 grey levels on 8.64 um scans and +75 on 9.362 um scans; weaker not excluded"
+ }
+}
