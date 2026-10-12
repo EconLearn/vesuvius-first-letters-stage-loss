@@ -1,0 +1,6 @@
+python	3.14.7	uv-managed CPython (cpython-3.14.7-linux-x86_64-gnu)
+uv	0.12.21	version that built both reference venvs (pyvenv.cfg)
+torch	2.12.1	PyPI default Linux build = CUDA 13.0 wheels (cuda-toolkit 13.0.2, nvidia-*-cu13); needs NVIDIA driver >= 580
+villa	e0bbb8b40a2db58b1d71864f286eb85717e59e64	ScrollPrize/villa (checked out to $VILLA_DIR by bootstrap.sh; spiral-fitting is used in place)
+pherc343_release	e8370f1f88a211166056df62ea6fcfffe4a1063e	Nieuwlaar/pherc343-first-letters (read as data only)
+os	Ubuntu 24.04	reference host: Ubuntu 24.04.1, gcc 13.3.0, glibc 2.39 (vc_spiral needs C++23 -> gcc >= 13)

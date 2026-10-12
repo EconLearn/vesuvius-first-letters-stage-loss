@@ -26,6 +26,16 @@ repeat every measurement. The full write-up, with every number and its CI, is in
    ink_9um scores 0.70–0.72, not below chance.
 5. v8-in stitching divides by the tile count instead of the summed blend weight. This leaves a ±10–19% 21-px grid on
    every released map. There is a one-line patch in `patches/`.
+6. End to end on a second known find (PHerc0343, FINDINGS §1.7). With a rule fixed before any ink was computed, my own
+   automatic surface (tracks-on fit, official flatten, my render) puts ink inside all 18 of the winner's letter boxes:
+   dense_native **+0.69** [0.49, 0.89] and **+0.71** [0.51, 0.92] against two matched nulls. A depth-shuffled render
+   loses. The letters were already known, so this shows the workflow can reach them, not that it finds text blind.
+7. Villa ink inference is CPU-bound, and moving its normalisation to the GPU makes it **3.1× faster** on an RTX 4060
+   (2.4–2.8× on an RTX 4090) with **bit-identical** maps (FINDINGS §6.1). It is opt-in:
+   `tools/ensemble/speed/depth_sweep_fast.py --villa-fast`.
+8. A pipeline that screens a whole 1,000-slice band for First Letters on one rented GPU, from fit inputs to
+   line-scale strips for a reader, with a cost guard and resumable steps (`tools/cloud/`, FINDINGS §7). Measured on an
+   RTX 4090: 1.4–2.3 hours and **$1.25–2.10 per band**, about $0.002 per cm² of surface.
 
 ## What is here
 
@@ -43,6 +53,8 @@ repeat every measurement. The full write-up, with every number and its CI, is in
 | `tools/g12_dose_score.py`, `g12_phase_floor.py`, `g12_offset_model.py`, `g12_geom.py`, `g12_orient.py`, `g12_order_geom.py`, `g12_auto_table.py`, `surf_normals.py` | Decomposition analyses: offset dose-response, tiling-phase floor, offset model, geometry, geometric depth order, learning curve, normal bias |
 | `tools/e1_scale_test.py`, `tools/e1_p343_mapping_check.py` | 1447 canvas preparation; PHerc0343P label registration and the PR-29 placement comparison |
 | `tools/vlib/` | Exact AUC, block bootstrap, C2 null, elongation (`metrics.py`, with a self-test); data access; run guards |
+| `tools/ensemble/` | The PHerc0343 pipeline: 66-layer render, depth sweeps for several ink models, ensemble z-maps, matched-null scorer, stage-2 mapping of letter boxes onto an automatic surface, the tile-ranking control, and a GPU fast path for villa inference that is bit-identical to the default path (`speed/`) |
+| `tools/cloud/` | The one-GPU screening pipeline: bootstrap with pinned environments, fit-input builders, fit supervisor, flatten wrapper, band screen and tile ranking, cost guard, jobs, a GPU lock, and a mocked dry run (`tests/dryrun.sh`). See `tools/cloud/RUNBOOK.md` |
 | `tools/vcpaths.py` | All paths, from environment variables (no machine-specific paths in the code) |
 | `patches/` | v8-in stitching fix (unified diff against the released `ink8um/inference.py`) |
 | `results/` | The result JSONs behind every number in FINDINGS.md (summary numbers only, no scroll data) |
@@ -253,9 +265,41 @@ python tools/g3_flat_paired.py ph0_0
 Band 2 (the held-out replication) uses the same tools: fit z 11000–12350, its own umbilicus, and `G3BAND=b2` for
 `g3_need.py` and `g3_score.py`.
 
+### 11. PHerc0343 end to end (FINDINGS §1.7)
+
+Inputs:
+- Erwin Nieuwlaar's release `pherc343-first-letters` at `$VC_ROOT/ext/pherc343-first-letters` (or set
+  `$PHERC343_REPO`). It provides his surface, the letter boxes and the `dense_native` model.
+- The ink_9um weights (seeds 42 and 43), as listed in `tools/vcpaths.py`.
+- The PHerc0343 CT. It is fetched on demand only when `ENS_ALLOW_FETCH=1` is set.
+
+GPU runs refuse to start unless `ENS_GPU_LOCK_HELD=1`. Set it yourself if nothing else is using the card, or point
+`GPU_LOCKED` at a lock wrapper (the contract is in the header of `tools/ensemble/sweep_locked.sh`).
+
+```
+# Step A: the ink chain on his surface, with matched nulls and a depth-shuffled sabotage
+bash tools/ensemble/calibrate_343.sh $VC_ROOT/ext/pherc343-first-letters cuda
+
+# Step B: my own surface. Fit z 9500-11000 with tracks on (section 3's recipe, input_use_tracks = true, track loss
+# from step 7000, 10k steps), flatten it (section 3), then map his boxes onto it and score:
+python tools/ensemble/stage2_q343.py --rel $VC_ROOT/ext/pherc343-first-letters \
+    --regions $VC_WORK/ensemble/calib343/regions.json --ours <my flattened .tifxyz> \
+    --out $VC_WORK/ensemble/stage2x --run --device cuda --models ink9_s42,ink9_s43,dnative \
+    --depths=-6..6:2 --sab-depths=-2..2:2 --margin 256
+python tools/ensemble/stage2/stage2_matched.py --stage2 $VC_WORK/ensemble/stage2x --models ink9_s42,ink9_s43,dnative
+python tools/ensemble/stage2/rankctl_343.py --stage2 $VC_WORK/ensemble/stage2x
+```
+
+The villa-model sweeps can run on a faster GPU path that gives bit-identical maps: call
+`tools/ensemble/speed/depth_sweep_fast.py --villa-fast` with the same arguments as `depth_sweep.py`. Check exactness on
+your own setup with `python tools/ensemble/speed/tests/test_norm_exact.py --render <a render .zarr> --device cpu`
+(it also has a `--sabotage` arm that must fail).
+
 Known gaps:
 - The 0009B and PHerc0841 targets of `e1_scale_test.py` need inputs that are not included here.
 - `g3_flat_paired.py` expects every listed phase to exist for all three arms.
+- On a 24 GB card the PHerc0343 track band (100 M points) needs the fit's fused Triton path (`FIT_SPIRAL_TRITON=1`);
+  without it the fit runs out of memory.
 
 ## Data terms and scope
 
@@ -264,8 +308,9 @@ Known gaps:
 - Legacy data: if you use the legacy data (Scrolls 1–4, Fragments 1–6), cite EduceLab-Scrolls: S. Parsons,
   C. S. Parker, C. Chapman, M. Hayashida, W. B. Seales, *EduceLab-Scrolls: Verifiable Recovery of Text from
   Herculaneum Papyri using X-ray CT*, arXiv:2304.02084 (2023).
-- Known text only: every measurement is on publicly labelled text, namely the PHerc1447 organiser labels and the
-  public PHerc0343P labels. Nothing here reveals text from an unread scroll.
+- Known text only: every measurement is on publicly labelled text, namely the PHerc1447 organiser labels, the public
+  PHerc0343P labels, and the PHerc0343 letter boxes published by Erwin Nieuwlaar. Nothing here reveals text from an
+  unread scroll.
 
 ## Credits
 
@@ -281,6 +326,9 @@ Known gaps:
   including the PR-29 control re-registered here.
 - **millerandmuller** (`first-light-pherc0826`): the published end-to-end First Letters run used as the recipe
   reference.
+- **Erwin Nieuwlaar** (`pherc343-first-letters`, MIT): the PHerc0343 surface, the 18 letter boxes and the
+  `dense_native` model used in FINDINGS §1.7. His scripts are not run or included here; only his published data and
+  model are read.
 
 ## AI assistance
 

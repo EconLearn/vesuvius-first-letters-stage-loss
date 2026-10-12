@@ -1,0 +1,23 @@
+# Screening configuration read by jobs/lib.sh (bash), py/volumes.py and quiet/m7normals.py (python). Tab-separated.
+# THIS IS AN EXAMPLE using only public, already-read targets (the PHerc0343 stage-2 band and the PHerc1447 band 1 of this
+# repository). To screen other scrolls, add one row per scroll (dataset = scroll name for the "screen" group), or point
+# $SCREEN_CONFIG at your own file with the same columns. Rows for scrolls whose CT volume is not built into the code need
+# vol_id and the array shape (from the public S3 listing of the volume).
+#   dataset   directory name under $VC_DATA/spiral/ (fit inputs of one band)
+#   scroll    scroll whose CT volume the band lives in
+#   fit_tag   name of the fit run (checkpoint dir under $QUIET_RUNS) for the screening job; - = not used by it
+#   z0, z1    z-range of the fitted band in full-resolution slices
+#   upload    1 = the fit inputs are normally prepared elsewhere and pushed with pc/upload_inputs.sh; 0 = built on the pod
+#   group     screen = scrolls screened by jobs/job3_quiet.sh (default $SCROLLS = these rows, in file order);
+#             stage2 = the PHerc0343 band used by jobs/job2_stage2_343.sh
+#   vol_id, shape_z, shape_y, shape_x   CT volume id (e.g. 20250521140437-8.640um-1.2m-116keV-masked.zarr) and array shape;
+#             - = built into the code (PHerc0343, PHerc1447)
+#   z_top_to_bottom   catalogue z-direction of the scroll: true / false, or - if the catalogue has none (umb_smooth.py
+#             then writes spiral-scroll.CW.json / .ACW.json variants; job 3 fits both and keeps the better one, see SENSE_MODE
+#             in RUNBOOK.md, or a person chooses the sense)
+#   voxel_um   voxel size of the volume in um (8.64 when -); written to spiral-scroll.json (voxel_size_um), passed to the flatten and
+#             used for scale bars. The CT paths use vol_id as given, so other volumes (e.g. 9.362 um) need nothing else.
+dataset	scroll	fit_tag	z0	z1	upload	group	vol_id	shape_z	shape_y	shape_x	z_top_to_bottom	voxel_um
+PHerc0343x	PHerc0343	-	9500	11000	0	stage2	-	-	-	-	false	8.64
+PHerc1447	PHerc1447	q1447_trk	13100	14100	0	screen	-	-	-	-	true	8.64
+PHerc0343	PHerc0343	q343_trk	9500	11000	0	screen	-	-	-	-	false	8.64

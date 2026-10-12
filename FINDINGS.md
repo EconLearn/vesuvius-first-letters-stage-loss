@@ -59,12 +59,16 @@ on a second, held-out z-band.
    - No automatic statistic located text regions (§1.6, pre-registered, held-out sheets). Labelled text is not even
      inkier than unlabelled papyrus at window scale (v8in AUC 0.25 / 0.19). Text-blind detectors can pass common
      nulls [m].
+   - End to end on PHerc0343 (§1.7): my own automatic surface puts ink inside all 18 of the winner's letter boxes
+     (dense_native +0.69 [0.49, 0.89] / +0.71 [0.51, 0.92] against matched nulls; a depth-shuffled render loses) [m].
 7. Tools (MIT licence). All of them have self-tests and sabotage arms, and I reran this package's copies on my PC.
    - A Python port of `vc_render_tifxyz`: correlation 0.99987, with 100% of voxels within 1 grey level of the
      organisers' render [m].
    - Two winding-consistency metrics: one in the flattened frame, and one read directly from a checkpoint (14 s on CPU).
    - A paired evaluator for the fit's own loss.
    - A stage-loss scorer.
+   - A faster path for villa ink inference: 3.1× on an RTX 4060 and 2.4–2.8× on an RTX 4090, with maps bit-identical
+     to the default path (§6.1) [m].
 
 ## Setup
 
@@ -294,6 +298,42 @@ Consequences:
 - Limitation: the "unlabelled" class on PHerc1447 surely contains some unlabelled text, so part of the failure may be
   contamination rather than a missing signal.
 
+### 1.7 End to end on a second known find (PHerc0343)
+
+PHerc0343's First Letters prize was won on 2026-10-08 by Erwin Nieuwlaar. His public repository
+`pherc343-first-letters` has his surface, his 18 letter boxes and his `dense_native` model. That gave me a second scroll
+with known letters, from a different scan and a different person, on which to test the whole automatic workflow.
+
+Test (the rule was written before any ink was computed):
+- Score = mean ink z-score inside each letter box minus a matched null: (I) the gaps between text lines in the same
+  rows, (R) a ring around the box. Ink counts as shown only if both 95% CIs (bootstrap over letters) are above 0 and the
+  same score on a depth-shuffled render (sabotage) is not.
+- Step A, the ink chain alone: his surface, my render, the ink models.
+- Step B, everything mine: my tracks-on spiral fit of z 9500–11000 (10k steps, the recipe of §1.4), the official
+  flatten, my render, the ink models. His boxes are carried onto my surface through 3D coordinates. At least 9 of the
+  18 letters must be covered, or the test counts as not testable.
+
+Results [m]:
+- Step A: dense_native +0.77 [0.58, 0.97] (I) / +0.74 [0.62, 0.87] (R), 18 of 18 letters. ink_9um seeds 42 and 43 and
+  the mean of the three models also pass. Every sabotage loses (−0.27 to −0.08).
+- Step B: my surface covers all 18 boxes. dense_native +0.69 [0.49, 0.89] (I) / +0.71 [0.51, 0.92] (R), all 18 letters
+  positive on both. Mean of the three models (ink_9um s42, s43, dense_native): +0.56 [0.42, 0.70] / +0.56 [0.40, 0.73].
+  Sabotage: −0.39 / −0.25 and −0.35 / −0.23.
+- At line scale the ink on my surface forms letter shapes inside the boxes. I looked at this knowing where the letters
+  were, so it is not a blind reading.
+- Ranking control: the tile score used to pick regions for a closer look (p95 − p50 of the depth-mean dense_native map
+  in 512-px tiles) puts 7 of the 15 letter tiles in the top 10% of 111 tiles (my pre-registered bar was 50%, so it
+  fails narrowly). Letter tiles vs other tiles: AUC 0.89, binomial p = 0.0003. On the sabotage maps: 1 of 15, AUC 0.38.
+
+What it shows and what it does not:
+- The automatic workflow puts ink where real letters are, on its own surface, against matched nulls, and a sabotage
+  loses. That is the precondition for running it on unread scrolls.
+- It is a reproduction on a scroll that was already read. The scores are measured where the letters are known to be,
+  so this is not a test of finding text blind (see §1.6).
+- Software differed slightly from the PHerc1447 runs: torch 2.14.1 on the rented GPU, and the fused Triton path for the
+  fit's inverse transform, which the spiral-fit code provides. Without it, a 100 M-point track band ran out of memory
+  on a 24 GB card.
+
 ## 2. Stage-loss decomposition (G1/G2 with ink_9um; G3 with v8-in)
 
 | Stage | Contrast (identical pixels) | ΔAUC [95% CI] |
@@ -407,6 +447,71 @@ All rows [m]. I re-ran the automatic-surface row from this package's code and it
 | `g12_g2.py`, `g3_score.py` | Stage-loss scorers with built-in sabotage arms (±10 vox, a neighbouring sheet) and an identity check | Identity mapping = direct score to the last digit; sabotage → 0% adherence, AUC 0.49–0.55 on band 1 (0.56 / 0.64 on band 2, against 0.81) |
 | `g12_umbilicus.py` | Automatic umbilicus (port of VC3D `align_and_extract_umbilicus`) | Seed spread 0.5–2.8 mm, within the tool's documented "few mm" |
 | `vlib/metrics.py` | Exact AUC, block bootstrap, C2 null, `eval_forme` elongation | Self-test passes (Mann–Whitney agreement, null 0.499) |
+| `ensemble/speed/fastvilla.py` | Faster villa ink inference: the patch filter, robust-MAD normalisation and overlap-add move from a CPU worker pool to the GPU | Bit-identical maps to the default path on 57 M px (three workloads, 16 and 6 CPUs) on an RTX 4060, and on 236 M px on an RTX 4090. Unit test on real and edge-case patches: 100% of voxels; its sabotage arm (divisor moved by one float32 ulp) fails. 3.1× faster on the 4060 (3.63 → 1.18 s per valid Mpx per depth), 2.4–2.8× on the 4090 |
+
+### 6.1 Why villa inference was slow, and the fix
+
+On the default path about 70% of the wall time was CPU work: villa's robust-MAD normalisation of each 64³ patch runs
+in a 6-worker process pool, and the serial `pool.map` per batch of 16 patches (278 KB in, 1.1 MB out per patch) is the
+bottleneck. More CPUs do not help (6 and 16 CPUs give the same speed; 14 workers is slower), and the GPU sits at
+27–34% use. The forward pass itself is compute-bound (2.70 ms per patch at batch 16; batch size, CUDA graphs,
+`cudnn.benchmark` and channels-last change it by 0.97–1.05×).
+
+The fast path sends the tile's uint8 window to the GPU once and does the zero-patch filter (integral image), the patch
+slicing, the normalisation and the Hann overlap-add there. The normalisation reproduces villa's `normalize_robust`
+exactly: 256-bin per-patch histograms give the order statistics, the 1st and 99th percentiles come from `np.percentile`
+itself (run on a small constructed array with the same length and the same order statistics around the interpolation
+point, cached), and clip, median, MAD and the division run in float32. Patches that take numpy's MAD fallback branch
+(12–16% here, mostly ones over half zero-padding) get their standard deviation from the CPU. After the change the path
+is forward-bound (forward 74% of the time). It is opt-in (`depth_sweep_fast.py --villa-fast`); a numpy or torch update
+should be re-checked with the unit test.
+
+A correction. My first version computed the percentiles with its own float64 interpolation. An independent
+re-implementation showed that this differs from numpy by one float32 step at the clip bounds for 14% (1st percentile)
+and 7.7% (99th) of value pairs at n = 278,528. The maps were still bit-identical in every comparison, because the
+median subtraction absorbed the difference, so the original unit test could not see it. The unit test now checks the
+percentiles directly: the old step fails it (210 and 62 mismatches in 1,500 cases), the current one passes (0 and 0),
+on CPU and GPU. With the fix the normalised tensors are bit-exact on 609 real and edge-case patches, the maps are
+still bit-identical, and the speed is unchanged [m].
+
+## 7. An automated screening pipeline for one rented GPU (`tools/cloud/`)
+
+The kit runs the whole First Letters workflow on one rented GPU, one 1,000-slice band at a time: fit inputs (lasagna
+normals and surface tracks) → tracks-on spiral fit → official flatten → render → a whole-band dense_native screen at
+d −2/0/+2 → a tile ranking → the three-model ensemble at d −6..+6 on the top tiles → line-scale strips and crops for a
+human reader. Every step is resumable, a cost guard runs before every step and every strip, and the job stops itself
+at a budget. A mocked dry run of all jobs passes 40/40 checks on a laptop.
+
+Validation:
+- On PHerc0343 the same chain, on its own surface, puts ink inside all 18 of the winner's letter boxes (§1.7).
+- The ranking step was checked on the same window (§1.7): letter tiles vs other tiles AUC 0.89, 7 of 15 letter tiles
+  in the top 10%.
+- Tiles near the edge of the valid surface produced bright bars that took ranking slots. Scoring only pixels at least
+  128 px inside the mask removed most of them and left the PHerc0343 ranking unchanged (AUC 0.88, 6 of 14) [m].
+
+Measured cost [m]. I ran it on six 1,000-slice bands of unread scrolls on a rented RTX 4090 at $0.91 per hour. This
+report makes no claim about their text.
+
+| Step | Time per band (steps timed on the first two bands) |
+|---|---|
+| Fit inputs (normals + tracks) | 11–17 min |
+| Spiral fit, 10k steps | 7–12 min |
+| Flatten | 1–2 min |
+| Whole-band screen (about 1,030–1,195 valid Mpx) | 21–26 min |
+| Ensemble on the top 10% of tiles | 37–43 min |
+| **Whole band (all six bands)** | **1 h 23 min to 2 h 20 min, $1.25–2.10** |
+
+In all, about 5,000 cm² of surface were screened for about $10.60, roughly $0.002 per cm².
+
+Problems I hit on the first real pod, now fixed in the kit:
+- The fit ran out of memory on a 24 GB card with a 100 M-point track band. The non-fused inverse transform builds a
+  points × windings tensor; the spiral-fit code's fused Triton path (`FIT_SPIRAL_TRITON=1`) used 6 GB.
+- A second lock file pulled a newer torch into one environment through a dependency, so the pod did not match the
+  tested versions. The environments now install their pinned files with `--no-deps`.
+- The flatten step needs villa's `lasagna/` directory, which a sparse checkout of `vesuvius` and `spiral-fitting`
+  leaves out.
+- The villa models spent most of their time in CPU normalisation; the fast path (§6.1) cut the screen to about
+  0.4 s per valid Mpx per depth on the 4090.
 
 ## Checks that could have failed
 

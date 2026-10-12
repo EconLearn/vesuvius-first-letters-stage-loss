@@ -1,0 +1,36 @@
+# pack_code.sh input: bash globs relative to the repository root (globstar on, nullglob on). Code and configs ONLY:
+# no CT, no normals, no tracks, no weights, no checkpoints, no renders. Excluded everywhere: __pycache__, *.pyc,
+# *.bak*, *nosense_bak*, *.so, build/.
+#
+# the cloud kit itself
+tools/cloud/bootstrap.sh
+tools/cloud/pack_code.sh
+tools/cloud/pack_manifest.txt
+tools/cloud/RUNBOOK.md
+tools/cloud/screen_scrolls.tsv
+tools/cloud/lock/*
+tools/cloud/pod/*.py
+tools/cloud/py/*.py
+tools/cloud/jobs/*.sh
+tools/cloud/pc/*.sh
+tools/cloud/tests/*.py
+tools/cloud/tests/*.sh
+# fit supervisor + input builders, flatten wrapper, GPU lock wrapper
+tools/cloud/quiet/*.py
+tools/cloud/read/*.py
+tools/cloud/gpu/*
+# ensemble (render66, depth_sweep, adapters, ensemble_maps, display, stage2, scorers, tools, GPU fast path and its tests)
+tools/ensemble/*.py
+tools/ensemble/*.sh
+tools/ensemble/ens/*.py
+tools/ensemble/stage2/*.py
+tools/ensemble/tools/*.py
+tools/ensemble/speed/*.py
+tools/ensemble/speed/tests/*.py
+# shared libraries
+tools/vcpaths.py
+tools/g12lib.py
+tools/vlib/*.py
+# Not packed (fetched or generated on the pod by bootstrap.sh, or data): the spiral-fitting sources (villa checkout), the
+# per-dataset spiral-scroll.json / umbilicus.json descriptors (data/spiral/<dataset>; umb_auto.py + umb_smooth.py write them),
+# the letter boxes (calib343_regions.py).

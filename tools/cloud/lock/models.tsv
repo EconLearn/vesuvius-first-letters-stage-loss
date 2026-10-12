@@ -1,0 +1,8 @@
+key	kind	file	sha256	source	url
+dnative	villa	dense_native-016000.pth	aacf6cb82c79d5d53a82b7451162172fb5a7bc4545a2cf295b6d67cf5d9ffe89	local	-
+dnative_public_weights	rebuild	dense_native_016000.safetensors	d3d95dc41dcb24ed76b84b5e12ca5dae25d7fb34edf1dfbb93e0186f91e6fc6d	url	https://huggingface.co/Nieuwlaar/ink9um-dense-native/resolve/main/weights/dense_native_016000.safetensors
+dnative_public_config	rebuild	train_dense_native.json	5d8459030b36cd3980a03610c684365a7407d497173eff433efdb37f75840c86	url	https://huggingface.co/Nieuwlaar/ink9um-dense-native/resolve/main/training/configs/train_dense_native.json
+hybrid_3d2d-seed42	villa	hybrid_3d2d-seed42_step-075000.pth	e635558ae6a1a807a7e5ec1e83adfd45bc3c0ac53883ea43f1d4e085d62a9cab	url	https://huggingface.co/scrollprize/ink_9um/resolve/main/hybrid_3d2d-seed42/step-075000.pth
+hybrid_3d2d-seed43	villa	hybrid_3d2d-seed43_step-075000.pth	2aeaa85a35ef28d7bc7bf3e848c4a6a91385e9132710927fdba41133c4ecb28f	url	https://huggingface.co/scrollprize/ink_9um/resolve/main/hybrid_3d2d-seed43/step-075000.pth
+hecate	hecate	hecate_9.6um.pth	809f4f10f7cb7afa19b4bee0f7d2ab31edd7e11b664f9f210cc9c17f22fcfe5d	url	https://huggingface.co/scrollprize/hecate/resolve/main/hecate_9.6um.pth
+hecate_code	code	hecate.py	c232c18a1a86cfb91257a00db13288202bb8ae33732ba26f7291a9b8adb8da59	url	https://huggingface.co/scrollprize/hecate/resolve/main/hecate.py
