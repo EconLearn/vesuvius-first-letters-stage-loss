@@ -30,7 +30,9 @@ section's normals crowd across its flat sides, and the section is stretched back
 1.5 chosen on the 3 dev scrolls. The patch adds 3 unit tests.
 
 `vc3d/build.sh` extracts the patched function verbatim from a villa checkout and compiles it against the OpenCV
-stand-ins in `cvmock.hpp`, so the numbers below come from the patch's own code. It has not been built inside VC3D here.
+stand-ins in `cvmock.hpp`, so the numbers below come from the patch's own code. Built inside VC3D with real OpenCV 4.6 (2026-10-16), the unit
+tests pass: `test_normalgridtools` 19/19, including the 3 new cases, and `test_normalgridtools_real` 5/5. The new cases give
+the same values as the stand-in build.
 
 Distance in mm to manual umbilici, 9 seeds per slice (numbers and per-slice values: `results/qa/umbilicus_vc3d_cpp.json`):
 
