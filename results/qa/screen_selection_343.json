@@ -1,0 +1,47 @@
+{
+ "A": {
+  "tiles": 242,
+  "eligible_frac": 0.789,
+  "letters_in_area": 18,
+  "caught": 15,
+  "recall": 0.833,
+  "random_mean": 0.173,
+  "random_p95": 0.389,
+  "p_random_ge": 0.0,
+  "null_sets_caught": [
+   6,
+   6,
+   5
+  ]
+ },
+ "B": {
+  "tiles": 1183,
+  "eligible_frac": 0.969,
+  "letters_in_area": 18,
+  "caught": 12,
+  "recall": 0.667,
+  "random_mean": 0.145,
+  "random_p95": 0.278,
+  "p_random_ge": 0.0,
+  "null_sets_caught": [
+   3,
+   3,
+   1
+  ]
+ },
+ "C": {
+  "tiles": 1183,
+  "eligible_frac": 0.969,
+  "letters_in_area": 18,
+  "caught": 8,
+  "recall": 0.444,
+  "random_mean": 0.145,
+  "random_p95": 0.278,
+  "p_random_ge": 0.006,
+  "null_sets_caught": [
+   1,
+   3,
+   2
+  ]
+ }
+}

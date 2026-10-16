@@ -1,0 +1,449 @@
+{
+ "control_points": [
+  {
+   "x": 4326.7,
+   "y": 5348.0,
+   "z": 1600,
+   "score": 100
+  },
+  {
+   "x": 4196.0,
+   "y": 5273.6,
+   "z": 1800,
+   "score": 100
+  },
+  {
+   "x": 4326.7,
+   "y": 5199.2,
+   "z": 2000,
+   "score": 100
+  },
+  {
+   "x": 4331.2,
+   "y": 5138.9,
+   "z": 2200,
+   "score": 100
+  },
+  {
+   "x": 4126.8,
+   "y": 5044.0,
+   "z": 2400,
+   "score": 100
+  },
+  {
+   "x": 4205.1,
+   "y": 4950.0,
+   "z": 2600,
+   "score": 100
+  },
+  {
+   "x": 4278.8,
+   "y": 4804.7,
+   "z": 2800,
+   "score": 100
+  },
+  {
+   "x": 4278.8,
+   "y": 4755.3,
+   "z": 3000,
+   "score": 100
+  },
+  {
+   "x": 4278.8,
+   "y": 4755.3,
+   "z": 3200,
+   "score": 100
+  },
+  {
+   "x": 4298.1,
+   "y": 4755.3,
+   "z": 3400,
+   "score": 100
+  },
+  {
+   "x": 4298.1,
+   "y": 4772.3,
+   "z": 3600,
+   "score": 100
+  },
+  {
+   "x": 4298.1,
+   "y": 4897.5,
+   "z": 3800,
+   "score": 100
+  },
+  {
+   "x": 4287.6,
+   "y": 4902.0,
+   "z": 4000,
+   "score": 100
+  },
+  {
+   "x": 4287.6,
+   "y": 5125.4,
+   "z": 4200,
+   "score": 100
+  },
+  {
+   "x": 4287.6,
+   "y": 5125.4,
+   "z": 4400,
+   "score": 100
+  },
+  {
+   "x": 4378.2,
+   "y": 4902.0,
+   "z": 4600,
+   "score": 100
+  },
+  {
+   "x": 4378.2,
+   "y": 4897.0,
+   "z": 4800,
+   "score": 100
+  },
+  {
+   "x": 4378.2,
+   "y": 4897.0,
+   "z": 5200,
+   "score": 100
+  },
+  {
+   "x": 4378.2,
+   "y": 4897.0,
+   "z": 5400,
+   "score": 100
+  },
+  {
+   "x": 4378.2,
+   "y": 5039.2,
+   "z": 5600,
+   "score": 100
+  },
+  {
+   "x": 4425.1,
+   "y": 5058.2,
+   "z": 5800,
+   "score": 100
+  },
+  {
+   "x": 4425.1,
+   "y": 5058.2,
+   "z": 6000,
+   "score": 100
+  },
+  {
+   "x": 4425.1,
+   "y": 5058.2,
+   "z": 6200,
+   "score": 100
+  },
+  {
+   "x": 4399.3,
+   "y": 4907.3,
+   "z": 6400,
+   "score": 100
+  },
+  {
+   "x": 4399.3,
+   "y": 4907.3,
+   "z": 6600,
+   "score": 100
+  },
+  {
+   "x": 4399.3,
+   "y": 4907.3,
+   "z": 6800,
+   "score": 100
+  },
+  {
+   "x": 4604.2,
+   "y": 4917.8,
+   "z": 7000,
+   "score": 100
+  },
+  {
+   "x": 4604.2,
+   "y": 4917.8,
+   "z": 7200,
+   "score": 100
+  },
+  {
+   "x": 4624.5,
+   "y": 4917.8,
+   "z": 7400,
+   "score": 100
+  },
+  {
+   "x": 4653.5,
+   "y": 4802.9,
+   "z": 7600,
+   "score": 100
+  },
+  {
+   "x": 4721.2,
+   "y": 4785.3,
+   "z": 7800,
+   "score": 100
+  },
+  {
+   "x": 4764.8,
+   "y": 4733.9,
+   "z": 8000,
+   "score": 100
+  },
+  {
+   "x": 4790.9,
+   "y": 4690.1,
+   "z": 8200,
+   "score": 100
+  },
+  {
+   "x": 4815.8,
+   "y": 4686.9,
+   "z": 8400,
+   "score": 100
+  },
+  {
+   "x": 4880.8,
+   "y": 4651.4,
+   "z": 8600,
+   "score": 100
+  },
+  {
+   "x": 4907.3,
+   "y": 4611.9,
+   "z": 8800,
+   "score": 100
+  },
+  {
+   "x": 4957.9,
+   "y": 4594.3,
+   "z": 9000,
+   "score": 100
+  },
+  {
+   "x": 4979.5,
+   "y": 4554.2,
+   "z": 9200,
+   "score": 100
+  },
+  {
+   "x": 4979.5,
+   "y": 4453.9,
+   "z": 9400,
+   "score": 100
+  },
+  {
+   "x": 4979.5,
+   "y": 4282.4,
+   "z": 9600,
+   "score": 100
+  },
+  {
+   "x": 4979.5,
+   "y": 4128.5,
+   "z": 9800,
+   "score": 100
+  },
+  {
+   "x": 4956.2,
+   "y": 3894.9,
+   "z": 10000,
+   "score": 100
+  },
+  {
+   "x": 4943.6,
+   "y": 3743.9,
+   "z": 10200,
+   "score": 100
+  },
+  {
+   "x": 4943.6,
+   "y": 3717.3,
+   "z": 10400,
+   "score": 100
+  },
+  {
+   "x": 4956.2,
+   "y": 3576.6,
+   "z": 10600,
+   "score": 100
+  },
+  {
+   "x": 4958.6,
+   "y": 3564.8,
+   "z": 10800,
+   "score": 100
+  },
+  {
+   "x": 4960.4,
+   "y": 3518.2,
+   "z": 11000,
+   "score": 100
+  },
+  {
+   "x": 4973.0,
+   "y": 3371.0,
+   "z": 11200,
+   "score": 100
+  },
+  {
+   "x": 4973.0,
+   "y": 3346.2,
+   "z": 11400,
+   "score": 100
+  },
+  {
+   "x": 4973.0,
+   "y": 3333.7,
+   "z": 11600,
+   "score": 100
+  },
+  {
+   "x": 4904.7,
+   "y": 3153.5,
+   "z": 11800,
+   "score": 100
+  },
+  {
+   "x": 4807.9,
+   "y": 2894.1,
+   "z": 12200,
+   "score": 100
+  },
+  {
+   "x": 4797.9,
+   "y": 2825.8,
+   "z": 12400,
+   "score": 100
+  },
+  {
+   "x": 4709.1,
+   "y": 2801.8,
+   "z": 12600,
+   "score": 100
+  },
+  {
+   "x": 4620.2,
+   "y": 2777.8,
+   "z": 12800,
+   "score": 100
+  }
+ ],
+ "metadata": {
+  "volume": "20250521133212-8.640um-1.2m-116keV-masked.zarr",
+  "volume_width": 8849,
+  "volume_height": 8849,
+  "volume_slices": 15898,
+  "voxelsize_um": 8.64,
+  "scan": "SCROLLS_TA_HEL_4.320um_1.0m_116keV_binmean_2_PHerc0306B_HA",
+  "source_annotation": "automatic (no hand annotation); umbkit",
+  "tool": "VC3D align_and_extract_umbilicus (villa volume-cartographer core/src/normalgridtools.cpp), compiled stand-alone against OpenCV stand-ins; un-crush option added (umbkit harness/)",
+  "normal_grid": "s3://vesuvius-challenge-open-data/PHerc0306B/representations/predictions/surfaces/20250521133212-surface-20260413222639-surface-m7-L0-th0.2.normal-grids",
+  "grid_level": 0,
+  "grid_to_fullres_factor": 1,
+  "coordinate_frame": "x, y, z in full-resolution voxels of the volume (zarr level 0)",
+  "seeds": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "seed_aggregation": "coordinatewise median of the per-seed estimates",
+  "slice_step": 200,
+  "min_segments_per_slice": 500,
+  "smoothing": "running median over 5 slices; points more than 3.0 mm from it rejected; ends trimmed to the first/last run of 3 consecutive kept, not-UNSURE slices, and an end stretch of <= 4 kept points separated from the rest by a jump > 5.0 mm is trimmed; control points = running median over 5 of the kept points in that range",
+  "unsure_rule": "seed spread (median distance of the 9 estimates from their median) > 2.0 mm, or the seeds split into two clusters (complete linkage, each >= 2 seeds) more than 3.0 mm apart",
+  "harness_sha256": {
+   "vc3d_harness": "d7f6ce5e137fd13ecef79c9de4c73a0c448659428d4e57a0cba8beedce20d6bc",
+   "vc3d_harness_n": "734c235b15b22ef2c3d1080ca8ec9ae247efa49bf8aba639eb7b11d724c94abc"
+  },
+  "run_utc": "2026-10-16T01:16:07Z",
+  "timestamp": "2026-10-16T01:32:25Z",
+  "method": "normal un-crush (beta 1.5)",
+  "alpha": null,
+  "beta": 1.5,
+  "total_points": 55,
+  "unsure_z": [
+   0,
+   200,
+   400,
+   1000,
+   1400,
+   4200,
+   4400,
+   4600,
+   4800,
+   5000,
+   5200,
+   5400,
+   6200,
+   6400,
+   12000,
+   12200,
+   13000,
+   13200,
+   13400,
+   13600,
+   14800,
+   15600
+  ],
+  "rejected_z": [
+   200,
+   400,
+   600,
+   800,
+   1200,
+   1400,
+   5000,
+   12000,
+   13400,
+   13600,
+   14000,
+   14400,
+   14600,
+   14800,
+   15000,
+   15200,
+   15400,
+   15600,
+   15800
+  ],
+  "trimmed_z": [
+   0,
+   200,
+   400,
+   600,
+   800,
+   1000,
+   1200,
+   1400,
+   13000,
+   13200,
+   13400,
+   13600,
+   13800,
+   14000,
+   14200,
+   14400,
+   14600,
+   14800,
+   15000,
+   15200,
+   15400,
+   15600,
+   15800
+  ],
+  "z_range_of_control_points": [
+   1600,
+   12800
+  ],
+  "note": "Automatic axis estimate, not a hand annotation. Check qa.png before use."
+ }
+}

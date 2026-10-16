@@ -6,3 +6,4 @@ hybrid_3d2d-seed42	villa	hybrid_3d2d-seed42_step-075000.pth	e635558ae6a1a807a7e5
 hybrid_3d2d-seed43	villa	hybrid_3d2d-seed43_step-075000.pth	2aeaa85a35ef28d7bc7bf3e848c4a6a91385e9132710927fdba41133c4ecb28f	url	https://huggingface.co/scrollprize/ink_9um/resolve/main/hybrid_3d2d-seed43/step-075000.pth
 hecate	hecate	hecate_9.6um.pth	809f4f10f7cb7afa19b4bee0f7d2ab31edd7e11b664f9f210cc9c17f22fcfe5d	url	https://huggingface.co/scrollprize/hecate/resolve/main/hecate_9.6um.pth
 hecate_code	code	hecate.py	c232c18a1a86cfb91257a00db13288202bb8ae33732ba26f7291a9b8adb8da59	url	https://huggingface.co/scrollprize/hecate/resolve/main/hecate.py
+readerv2	villa	reader-v2-step040000.pth	654ec5acec2b6c4788d9cb326e2f0b8c2c730584949a934ef775db7f6ab5d3a6	url	https://huggingface.co/domenicor046/reader-v2/resolve/72633d8aa6d40e9e737ccea4c9928fbc624dab45/reader-v2-step040000.pth

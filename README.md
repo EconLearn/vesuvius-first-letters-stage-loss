@@ -43,6 +43,27 @@ repeat every measurement. The full write-up, with every number and its CI, is in
 10. The first systematic search for lead-based ink across all 21 First Letters scrolls, with no ink model
    (`tools/qa/lead_screen.py`, FINDINGS §9). A planted lead-like layer is detected down to about +50 grey levels
    (+75 on 9.362 µm scans); no scroll shows such a signature, and the two highest did not replicate.
+11. A better automatic scroll axis (umbilicus) for crushed scrolls (`tools/qa/umbilicus/`).
+   - VC3D's estimator assumes round windings. Stretching each slice back towards round before estimating brings its
+     axis closer to the hand-made axes (Drobkov's, MIT).
+   - On the m7-skeleton route of the kit, 7 held-out scrolls: median **1.77 → 1.26 mm** (p = 0.021). Random-axis
+     stretching gives no gain.
+   - As an opt-in C++ patch of VC3D's own `align_and_extract_umbilicus` / `vc_gen_umbilicus`, where the stretch comes
+     from the sheet normals: **2.22 → 1.33 mm** (p = 0.0074). On the challenge's own umbilici it gives 0.85 → 0.61 mm,
+     which is **not significant** (p = 0.11).
+12. Reader v2 as an ensemble member, tested on a scroll none of the models was trained on (PHerc1447 w058/w060
+   labels). Pixel AUC of the ensemble rises by **+0.021** [0.017, 0.026] (`tools/qa/w1447_*.py`). Reader v2 was
+   trained on PHerc0343, so 343 cannot test it.
+13. The screen's tile selection checked on known text (`tools/qa/screen_selection_eval.py`). With a 10 % budget it
+   keeps tiles covering **15 of the 18** letters of the PHerc0343 winner; random picking keeps 17 %. Two alternative
+   rules I expected to be better were worse (12/18, 8/18).
+14. Automatic umbilici for the 9 First Letters scrolls that had none from anyone (`umbilici/`): PHerc0175A, 0175B,
+   0306B, 0483A, 0483B, 0490A, 0490B, 0846A (plus its 2.403 µm volume) and 0846B.
+   - They come from the published m7 normal grids, using the un-crush estimator of result 11 with 9 seeds per slice.
+   - Each scroll has an `umbilicus.json` in the official schema, the raw estimates of all three methods, and a QA
+     image.
+   - These are automatic estimates, not hand annotations. Each slice carries an UNSURE flag; PHerc0490B has no single
+     centre and should not be used without a look at its `qa.png`.
 
 ## What is here
 
@@ -62,7 +83,8 @@ repeat every measurement. The full write-up, with every number and its CI, is in
 | `tools/vlib/` | Exact AUC, block bootstrap, C2 null, elongation (`metrics.py`, with a self-test); data access; run guards |
 | `tools/ensemble/` | The PHerc0343 pipeline: 66-layer render, depth sweeps for several ink models, ensemble z-maps, matched-null scorer, stage-2 mapping of letter boxes onto an automatic surface, the tile-ranking control, and a GPU fast path for villa inference that is bit-identical to the default path (`speed/`) |
 | `tools/cloud/` | The one-GPU screening pipeline: bootstrap with pinned environments, fit-input builders, fit supervisor, flatten wrapper, band screen and tile ranking, cost guard, jobs, a GPU lock, and a mocked dry run (`tests/dryrun.sh`). See `tools/cloud/RUNBOOK.md` |
-| `tools/qa/` | Surface-on-sheet check against the m7 sheet prediction (with a push-off sabotage arm); model-free lead-ink screen and face-on viewer |
+| `tools/qa/` | Surface-on-sheet check against the m7 sheet prediction (with a push-off sabotage arm); model-free lead-ink screen and face-on viewer; umbilicus benchmark and the VC3D un-crush patch (`umbilicus/`); Reader v2 test on PHerc1447; tile-selection check |
+| `umbilici/` | Automatic umbilici (official `umbilicus.json` schema) for the 9 eligible scrolls without one, with per-slice flags, all-method raw estimates, QA images and the pipeline (`scripts/umbkit.py`, `harness/`) |
 | `tools/vcpaths.py` | All paths, from environment variables (no machine-specific paths in the code) |
 | `patches/` | v8-in stitching fix (unified diff against the released `ink8um/inference.py`) |
 | `results/` | The result JSONs behind every number in FINDINGS.md (summary numbers only, no scroll data) |

@@ -1,0 +1,394 @@
+{
+ "control_points": [
+  {
+   "x": 3631.4,
+   "y": 3928.2,
+   "z": 2200,
+   "score": 100
+  },
+  {
+   "x": 3615.2,
+   "y": 3919.5,
+   "z": 2400,
+   "score": 100
+  },
+  {
+   "x": 3599.0,
+   "y": 3911.5,
+   "z": 2600,
+   "score": 100
+  },
+  {
+   "x": 3546.4,
+   "y": 3911.5,
+   "z": 2800,
+   "score": 100
+  },
+  {
+   "x": 3538.8,
+   "y": 3910.8,
+   "z": 3000,
+   "score": 100
+  },
+  {
+   "x": 3538.8,
+   "y": 3910.8,
+   "z": 3200,
+   "score": 100
+  },
+  {
+   "x": 3546.4,
+   "y": 3906.6,
+   "z": 3400,
+   "score": 100
+  },
+  {
+   "x": 3575.2,
+   "y": 3906.6,
+   "z": 3600,
+   "score": 100
+  },
+  {
+   "x": 3586.5,
+   "y": 3880.2,
+   "z": 3800,
+   "score": 100
+  },
+  {
+   "x": 3666.4,
+   "y": 3872.4,
+   "z": 4000,
+   "score": 100
+  },
+  {
+   "x": 3696.0,
+   "y": 3852.9,
+   "z": 4200,
+   "score": 100
+  },
+  {
+   "x": 3805.3,
+   "y": 3813.6,
+   "z": 4400,
+   "score": 100
+  },
+  {
+   "x": 3805.3,
+   "y": 3813.6,
+   "z": 4600,
+   "score": 100
+  },
+  {
+   "x": 3696.0,
+   "y": 3852.9,
+   "z": 4800,
+   "score": 100
+  },
+  {
+   "x": 3662.3,
+   "y": 3856.8,
+   "z": 5000,
+   "score": 100
+  },
+  {
+   "x": 3493.0,
+   "y": 4018.3,
+   "z": 5200,
+   "score": 100
+  },
+  {
+   "x": 3458.9,
+   "y": 4023.1,
+   "z": 5400,
+   "score": 100
+  },
+  {
+   "x": 3458.9,
+   "y": 4018.3,
+   "z": 5600,
+   "score": 100
+  },
+  {
+   "x": 3493.0,
+   "y": 4023.1,
+   "z": 5800,
+   "score": 100
+  },
+  {
+   "x": 3495.8,
+   "y": 4023.1,
+   "z": 6000,
+   "score": 100
+  },
+  {
+   "x": 3577.5,
+   "y": 3998.2,
+   "z": 6200,
+   "score": 100
+  },
+  {
+   "x": 3606.8,
+   "y": 3976.4,
+   "z": 6400,
+   "score": 100
+  },
+  {
+   "x": 3819.9,
+   "y": 3976.4,
+   "z": 6600,
+   "score": 100
+  },
+  {
+   "x": 3838.4,
+   "y": 3967.9,
+   "z": 6800,
+   "score": 100
+  },
+  {
+   "x": 3838.4,
+   "y": 3967.9,
+   "z": 7600,
+   "score": 100
+  },
+  {
+   "x": 3838.4,
+   "y": 3945.7,
+   "z": 8000,
+   "score": 100
+  },
+  {
+   "x": 3809.3,
+   "y": 3728.2,
+   "z": 8200,
+   "score": 100
+  },
+  {
+   "x": 3809.3,
+   "y": 3640.1,
+   "z": 8600,
+   "score": 100
+  },
+  {
+   "x": 3809.3,
+   "y": 3640.1,
+   "z": 8800,
+   "score": 100
+  },
+  {
+   "x": 4373.0,
+   "y": 3640.1,
+   "z": 9000,
+   "score": 100
+  },
+  {
+   "x": 4373.0,
+   "y": 3695.7,
+   "z": 9200,
+   "score": 100
+  },
+  {
+   "x": 4373.0,
+   "y": 3764.5,
+   "z": 9400,
+   "score": 100
+  },
+  {
+   "x": 4252.2,
+   "y": 3835.4,
+   "z": 9600,
+   "score": 100
+  },
+  {
+   "x": 4047.6,
+   "y": 3963.7,
+   "z": 9800,
+   "score": 100
+  },
+  {
+   "x": 3806.6,
+   "y": 3963.7,
+   "z": 10200,
+   "score": 100
+  },
+  {
+   "x": 3806.6,
+   "y": 3835.4,
+   "z": 10600,
+   "score": 100
+  },
+  {
+   "x": 3806.6,
+   "y": 3702.8,
+   "z": 10800,
+   "score": 100
+  },
+  {
+   "x": 3839.0,
+   "y": 3584.2,
+   "z": 11000,
+   "score": 100
+  },
+  {
+   "x": 3933.3,
+   "y": 3584.2,
+   "z": 11200,
+   "score": 100
+  },
+  {
+   "x": 3933.3,
+   "y": 3572.4,
+   "z": 11400,
+   "score": 100
+  },
+  {
+   "x": 3941.1,
+   "y": 3600.2,
+   "z": 12000,
+   "score": 100
+  },
+  {
+   "x": 3962.8,
+   "y": 3573.7,
+   "z": 12200,
+   "score": 100
+  },
+  {
+   "x": 3968.1,
+   "y": 3573.7,
+   "z": 12400,
+   "score": 100
+  },
+  {
+   "x": 3962.8,
+   "y": 3563.5,
+   "z": 12600,
+   "score": 100
+  },
+  {
+   "x": 3962.8,
+   "y": 3573.7,
+   "z": 12800,
+   "score": 100
+  },
+  {
+   "x": 3910.2,
+   "y": 3573.7,
+   "z": 13000,
+   "score": 100
+  },
+  {
+   "x": 3902.6,
+   "y": 3622.1,
+   "z": 13200,
+   "score": 100
+  },
+  {
+   "x": 3895.1,
+   "y": 3691.9,
+   "z": 13400,
+   "score": 100
+  }
+ ],
+ "metadata": {
+  "volume": "20250728152254-9.362um-1.2m-113keV-masked.zarr",
+  "volume_width": 7726,
+  "volume_height": 7726,
+  "volume_slices": 14019,
+  "voxelsize_um": 9.362,
+  "scan": "SCROLLS_HEL_4.681um_113keV_1.2m_binmean_2_PHerc_0846A_C_HA",
+  "source_annotation": "automatic (no hand annotation); umbkit",
+  "tool": "VC3D align_and_extract_umbilicus (villa volume-cartographer core/src/normalgridtools.cpp), compiled stand-alone against OpenCV stand-ins; un-crush option added (umbkit harness/)",
+  "normal_grid": "s3://vesuvius-challenge-open-data/PHerc0846A/representations/predictions/surfaces/20250728152254-surface-20260413222639-surface-m7-L0-th0.2.normal-grids",
+  "grid_level": 0,
+  "grid_to_fullres_factor": 1,
+  "coordinate_frame": "x, y, z in full-resolution voxels of the volume (zarr level 0)",
+  "seeds": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "seed_aggregation": "coordinatewise median of the per-seed estimates",
+  "slice_step": 200,
+  "min_segments_per_slice": 500,
+  "smoothing": "running median over 5 slices; points more than 3.0 mm from it rejected; ends trimmed to the first/last run of 3 consecutive kept, not-UNSURE slices, and an end stretch of <= 4 kept points separated from the rest by a jump > 5.0 mm is trimmed; control points = running median over 5 of the kept points in that range",
+  "unsure_rule": "seed spread (median distance of the 9 estimates from their median) > 2.0 mm, or the seeds split into two clusters (complete linkage, each >= 2 seeds) more than 3.0 mm apart",
+  "harness_sha256": {
+   "vc3d_harness": "d7f6ce5e137fd13ecef79c9de4c73a0c448659428d4e57a0cba8beedce20d6bc",
+   "vc3d_harness_n": "734c235b15b22ef2c3d1080ca8ec9ae247efa49bf8aba639eb7b11d724c94abc"
+  },
+  "run_utc": "2026-10-16T01:21:52Z",
+  "timestamp": "2026-10-16T01:33:03Z",
+  "method": "normal un-crush (beta 1.5)",
+  "alpha": null,
+  "beta": 1.5,
+  "total_points": 48,
+  "unsure_z": [
+   0,
+   400,
+   1600,
+   5200,
+   7200,
+   7400,
+   7600,
+   7800,
+   8000,
+   9600,
+   9800,
+   10200,
+   10400,
+   10600,
+   10800,
+   11000,
+   11200,
+   11600,
+   11800,
+   12000,
+   12200,
+   12400
+  ],
+  "rejected_z": [
+   200,
+   400,
+   600,
+   800,
+   1600,
+   1800,
+   2000,
+   7000,
+   7200,
+   7400,
+   7800,
+   8400,
+   10000,
+   10400,
+   11600,
+   11800,
+   13800,
+   14000
+  ],
+  "trimmed_z": [
+   0,
+   200,
+   400,
+   600,
+   800,
+   1600,
+   1800,
+   2000,
+   13600,
+   13800,
+   14000
+  ],
+  "z_range_of_control_points": [
+   2200,
+   13400
+  ],
+  "note": "Automatic axis estimate, not a hand annotation. Check qa.png before use."
+ }
+}

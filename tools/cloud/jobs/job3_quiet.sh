@@ -132,12 +132,12 @@ while [ $# -gt 0 ]; do
   step "${S}_flatten" 0.15 flatten_tag "$TAG" "$DS" 10000 "${VX[$S]:-8.64}"; rc=$?; stop_if_budget $rc
   [ $rc -eq 0 ] || { status "$S: flatten failed; skipping"; continue; }
   if [ "${SNAP:-0}" = 1 ]; then
-    step "${S}_snap" 0.3 snap_flat "$S" "$TAG"; rc=$?; stop_if_budget $rc
+    step "${S}_snap" 0.3 snap_flat "${SC[$S]}" "$TAG"; rc=$?; stop_if_budget $rc   # scroll name, not the dataset name
     if [ $rc -eq 0 ]; then FLAT=$(snap_path "$TAG"); status "$S: screening the snapped mesh $FLAT"
     else status "$S: snap failed (rc=$rc); screening the unsnapped mesh"; fi
   fi
   prefit_next "$NEXT"
-  step "${S}_plan" 0.05 $BS plan --scroll "$S" --tifxyz "$FLAT" --out "$W" --strip-cols "$STRIP_COLS" --tile "$TILE"; rc=$?
+  step "${S}_plan" 0.05 $BS plan --scroll "${SC[$S]}" --tifxyz "$FLAT" --out "$W" --strip-cols "$STRIP_COLS" --tile "$TILE"; rc=$?
   stop_if_budget $rc
   [ $rc -eq 0 ] || { status "$S: plan failed (rc=$rc; 3 = ambiguous normal sign); skipping"; continue; }
   "$PY" -c "import json; p=json.load(open('$W/plan.json')); print(f\"plan: {p['valid_mpx_est']} valid Mpx, {len(p['strips'])} strips, CT ~{p['ct_gb_est']} GB, normals {p['normal_sign']} (outward {p['outward_fraction']:.3f})\")" | while read -r l; do status "$S $l"; done
@@ -151,6 +151,6 @@ while [ $# -gt 0 ]; do
   [ $rc -eq 0 ] || { status "$S: ensemble failed; skipping"; continue; }
   step "${S}_summary" 0.01 summary "$S" "$W" "$R"
   tail -1 "$STATE/logs/job3.${S}_summary.log" | cut -c1-400 | while read -r l; do status "$S summary: $l"; done
-  step "${S}_prune" 0.01 prune_ct "$S"
+  step "${S}_prune" 0.01 prune_ct "${SC[$S]}"
 done
 status "JOB 3 finished the scroll list. Sync results back (pc/sync_back.sh), then stop/terminate the pod."

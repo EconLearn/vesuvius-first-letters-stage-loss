@@ -27,6 +27,9 @@ tools/ensemble/stage2/*.py
 tools/ensemble/tools/*.py
 tools/ensemble/speed/*.py
 tools/ensemble/speed/tests/*.py
+# the repo's automatic umbilici (used by jobs/inputs.sh when they span the band; small JSON files)
+umbilici/*/umbilicus.json
+umbilici/*/*/umbilicus.json
 # shared libraries
 tools/vcpaths.py
 tools/g12lib.py

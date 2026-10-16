@@ -54,6 +54,15 @@ build_descriptors() {  # DS : umbilicus.json + spiral-scroll*.json that are miss
   local ds=$1 d s z0 z1 st stage raw qa f
   d=$(ds_dir "$ds"); s=${SC[$ds]}; read -r z0 z1 <<< "${BAND[$ds]}"
   [ -e "$d/.desc_done" ] && return 0
+  # The repo's automatic umbilicus for this scroll (umbilici/<scroll>/umbilicus.json: VC3D estimator with un-crush, validated
+  # against hand-made axes and in downstream fits, tools/qa/umbilicus) is used when its control points span the band;
+  # UMB_SOURCE=auto keeps the m7-skeleton estimate below instead.
+  local rep=${UMB_REPO_DIR:-$CLOUD/../../umbilici}/$s/umbilicus.json
+  if [ "${UMB_SOURCE:-repo}" = repo ] && [ -s "$rep" ] && [ ! -e "$d/umbilicus.json" ] && "$PY" -c "
+import json, sys; z = [p['z'] for p in json.load(open(sys.argv[1]))['control_points']]
+sys.exit(0 if min(z) <= int(sys.argv[2]) and max(z) >= int(sys.argv[3]) else 1)" "$rep" "$z0" "$z1"; then
+    cp -f "$rep" "$d/umbilicus.json"; echo "umbilicus: the repo's axis $rep"
+  fi
   if [ -s "$d/umbilicus.json" ] && [ -s "$d/spiral-scroll.json" ]; then date -Is > "$d/.desc_done"; return 0; fi   # made by hand / uploaded
   stage=$d/.desc_build; raw=$QW/out/umb_raw_$ds.json; qa=$RESULTS/$ds/descriptors/umbilicus_qa.png
   st=$(( (z1 - z0) / 14 )); [ $st -ge 1 ] || st=1
@@ -61,7 +70,7 @@ build_descriptors() {  # DS : umbilicus.json + spiral-scroll*.json that are miss
   if [ "$DRY" = 1 ]; then
     $MOCK inputs desc "$stage" "$s" "$z0" "$z1" "$ds" "$qa" || return 2
   else
-    nice -n 19 "$PY" -u "$LQ/umb_auto.py" "$s" "$raw" "$z0" "$z1" "$st" --normals m7st --seeds 1 2 3 || return 2
+    nice -n 19 "$PY" -u "$LQ/umb_auto.py" "$s" "$raw" "$z0" "$z1" "$st" --normals m7st --seeds 1 2 3 --uncrush "${UMB_UNCRUSH:-0.5}" || return 2
     nice -n 19 "$PY" -u "$LQ/umb_smooth.py" "$s" "$raw" "$stage" "$z0" "$z1" --qa "$qa" || return 2
     cp -f "$raw" "$(dirname "$qa")/umbilicus_raw.json"
   fi

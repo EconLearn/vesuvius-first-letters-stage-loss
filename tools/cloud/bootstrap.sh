@@ -190,6 +190,7 @@ fetch dnative_public_weights "$EXT/weights/dense_native/dense_native_016000.safe
 fetch dnative_public_config "$EXT/weights/dense_native/train_dense_native.json"
 fetch hybrid_3d2d-seed42 "$CKPT/ink_9um/hybrid_3d2d-seed42/step-075000.pth"
 fetch hybrid_3d2d-seed43 "$EXT/weights/ink_9um_seed43/step-075000.pth"
+case ",${ENS_MODELS:-}," in *,readerv2,*) fetch readerv2 "$EXT/weights/reader_v2/reader-v2-step040000.pth" ;; esac
 if [ "$HECATE" = 1 ]; then
   fetch hecate "$EXT/weights/hecate/hecate_9.6um.pth"; fetch hecate_code "$EXT/weights/hecate/hecate.py"
 fi

@@ -1,0 +1,274 @@
+{
+ "control_points": [
+  {
+   "x": 5008.9,
+   "y": 3804.9,
+   "z": 2000,
+   "score": 100
+  },
+  {
+   "x": 4968.8,
+   "y": 3822.2,
+   "z": 2200,
+   "score": 100
+  },
+  {
+   "x": 4942.5,
+   "y": 3839.5,
+   "z": 2400,
+   "score": 100
+  },
+  {
+   "x": 4928.7,
+   "y": 3882.0,
+   "z": 2600,
+   "score": 100
+  },
+  {
+   "x": 4814.8,
+   "y": 3949.4,
+   "z": 2800,
+   "score": 100
+  },
+  {
+   "x": 4928.7,
+   "y": 4217.7,
+   "z": 3000,
+   "score": 100
+  },
+  {
+   "x": 4942.5,
+   "y": 4217.7,
+   "z": 3200,
+   "score": 100
+  },
+  {
+   "x": 4961.9,
+   "y": 4217.7,
+   "z": 3400,
+   "score": 100
+  },
+  {
+   "x": 4961.9,
+   "y": 4213.9,
+   "z": 3600,
+   "score": 100
+  },
+  {
+   "x": 4961.9,
+   "y": 4213.9,
+   "z": 3800,
+   "score": 100
+  },
+  {
+   "x": 4733.6,
+   "y": 4213.9,
+   "z": 4000,
+   "score": 100
+  },
+  {
+   "x": 4528.6,
+   "y": 4524.3,
+   "z": 4200,
+   "score": 100
+  },
+  {
+   "x": 4423.2,
+   "y": 4524.3,
+   "z": 4400,
+   "score": 100
+  },
+  {
+   "x": 4269.8,
+   "y": 4614.8,
+   "z": 4600,
+   "score": 100
+  },
+  {
+   "x": 4132.5,
+   "y": 4614.8,
+   "z": 5400,
+   "score": 100
+  },
+  {
+   "x": 4115.6,
+   "y": 4792.1,
+   "z": 5800,
+   "score": 100
+  },
+  {
+   "x": 4115.6,
+   "y": 4792.1,
+   "z": 6200,
+   "score": 100
+  },
+  {
+   "x": 3997.9,
+   "y": 4967.3,
+   "z": 6600,
+   "score": 100
+  },
+  {
+   "x": 3758.0,
+   "y": 4952.1,
+   "z": 6800,
+   "score": 100
+  },
+  {
+   "x": 3758.0,
+   "y": 4877.1,
+   "z": 7000,
+   "score": 100
+  },
+  {
+   "x": 3755.6,
+   "y": 4952.1,
+   "z": 7200,
+   "score": 100
+  },
+  {
+   "x": 3509.2,
+   "y": 5133.1,
+   "z": 8200,
+   "score": 100
+  },
+  {
+   "x": 3513.1,
+   "y": 5133.1,
+   "z": 8600,
+   "score": 100
+  },
+  {
+   "x": 3452.9,
+   "y": 5279.4,
+   "z": 8800,
+   "score": 100
+  },
+  {
+   "x": 3405.5,
+   "y": 5388.6,
+   "z": 9000,
+   "score": 100
+  },
+  {
+   "x": 3429.2,
+   "y": 5401.2,
+   "z": 9200,
+   "score": 100
+  },
+  {
+   "x": 3405.5,
+   "y": 5413.8,
+   "z": 9400,
+   "score": 100
+  }
+ ],
+ "metadata": {
+  "volume": "20250521151215-8.640um-1.2m-116keV-masked.zarr",
+  "volume_width": 8343,
+  "volume_height": 8343,
+  "volume_slices": 10648,
+  "voxelsize_um": 8.64,
+  "scan": "SCROLLS_TA_HEL_4.320um_1.0m_116keV_binmean_2_PHerc0490B_HA",
+  "source_annotation": "automatic (no hand annotation); umbkit",
+  "tool": "VC3D align_and_extract_umbilicus (villa volume-cartographer core/src/normalgridtools.cpp), compiled stand-alone against OpenCV stand-ins; un-crush option added (umbkit harness/)",
+  "normal_grid": "s3://vesuvius-challenge-open-data/PHerc0490B/representations/predictions/surfaces/20250521151215-surface-20260413222639-surface-m7-L0-th0.2.normal-grids",
+  "grid_level": 0,
+  "grid_to_fullres_factor": 1,
+  "coordinate_frame": "x, y, z in full-resolution voxels of the volume (zarr level 0)",
+  "seeds": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "seed_aggregation": "coordinatewise median of the per-seed estimates",
+  "slice_step": 200,
+  "min_segments_per_slice": 500,
+  "smoothing": "running median over 5 slices; points more than 3.0 mm from it rejected; ends trimmed to the first/last run of 3 consecutive kept, not-UNSURE slices, and an end stretch of <= 4 kept points separated from the rest by a jump > 5.0 mm is trimmed; control points = running median over 5 of the kept points in that range",
+  "unsure_rule": "seed spread (median distance of the 9 estimates from their median) > 2.0 mm, or the seeds split into two clusters (complete linkage, each >= 2 seeds) more than 3.0 mm apart",
+  "harness_sha256": {
+   "vc3d_harness": "d7f6ce5e137fd13ecef79c9de4c73a0c448659428d4e57a0cba8beedce20d6bc",
+   "vc3d_harness_n": "734c235b15b22ef2c3d1080ca8ec9ae247efa49bf8aba639eb7b11d724c94abc"
+  },
+  "run_utc": "2026-10-16T01:08:00Z",
+  "timestamp": "2026-10-16T01:32:58Z",
+  "method": "normal un-crush (beta 1.5)",
+  "alpha": null,
+  "beta": 1.5,
+  "total_points": 27,
+  "unsure_z": [
+   0,
+   200,
+   400,
+   600,
+   1800,
+   2600,
+   2800,
+   3000,
+   3600,
+   3800,
+   4000,
+   4200,
+   4600,
+   4800,
+   5200,
+   5400,
+   6000,
+   6200,
+   6600,
+   6800,
+   7400,
+   7600,
+   8200,
+   8400,
+   8800,
+   10200
+  ],
+  "rejected_z": [
+   0,
+   400,
+   600,
+   1400,
+   4800,
+   5000,
+   5200,
+   5600,
+   6000,
+   6400,
+   7400,
+   7600,
+   7800,
+   8000,
+   8400,
+   9600,
+   10000,
+   10200,
+   10400
+  ],
+  "trimmed_z": [
+   0,
+   200,
+   400,
+   600,
+   1400,
+   1600,
+   1800,
+   9600,
+   10000,
+   10200,
+   10400,
+   10600
+  ],
+  "z_range_of_control_points": [
+   2000,
+   9400
+  ],
+  "note": "Automatic axis estimate, not a hand annotation. Check qa.png before use."
+ }
+}

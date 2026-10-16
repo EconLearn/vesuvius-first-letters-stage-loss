@@ -48,6 +48,9 @@ SPECS = {
     'ink9_s43': dict(family='villa', ckpt=first(EXT / 'ink_9um_seed43/step-075000.pth',
                                                 CKPT / 'ink_9um/hybrid_3d2d-seed43/step-075000.pth'),
                      fetch='hf scrollprize/ink_9um  hybrid_3d2d-seed43/step-075000.pth  (138,360,231 B)'),
+    'readerv2': dict(family='villa', ckpt=first(EXT / 'reader_v2/reader-v2-step040000.pth',
+                                                CKPT / 'reader_v2/reader-v2-step040000.pth'),
+                     fetch='hf domenicor046/reader-v2  reader-v2-step040000.pth  (138,382,373 B, MIT; ink_9um architecture)'),
     'dnative': dict(family='villa', ckpt=None,      # rebuilt in memory from safetensors + config (no disk copy)
                     safetensors=first(EXT / 'dense_native/dense_native_016000.safetensors',
                                       CKPT / 'dense_native/weights/dense_native_016000.safetensors'),

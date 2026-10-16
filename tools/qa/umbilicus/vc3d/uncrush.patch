@@ -1,0 +1,280 @@
+--- a/volume-cartographer/core/include/vc/core/util/normalgridtools.hpp
++++ b/volume-cartographer/core/include/vc/core/util/normalgridtools.hpp
+@@ -24,10 +24,16 @@
+  * @param seed Seed for the generator that draws the sampled segments and the candidate
+  *             points. With no seed the generator is seeded once from the hardware, as before,
+  *             so two calls give different answers; with a seed a run can be repeated exactly.
++ * @param uncrush Strength beta >= 0 of an un-crush step for crushed scrolls: before the search the
++ *             section is stretched along the axis its segment normals crowd towards, by the
++ *             orientation tensor of those normals to the power beta / 2, and the result is mapped
++ *             back. A round section is left as it is. 0, the default, is the estimator unchanged;
++ *             1.5 was chosen on 3 scrolls with manual umbilici and tested on 13 others.
+  * @return A cv::Vec2f representing the estimated umbilicus point in the 2D grid space.
+  */
+ cv::Vec2f align_and_extract_umbilicus(const GridStore& grid_store,
+-                                      std::optional<std::uint32_t> seed = std::nullopt);
++                                      std::optional<std::uint32_t> seed = std::nullopt,
++                                      float uncrush = 0.0f);
+ 
+ void align_and_filter_segments(const GridStore& grid_store, GridStore& result, const cv::Vec2f& center_point = cv::Vec2f(std::numeric_limits<float>::quiet_NaN(), std::numeric_limits<float>::quiet_NaN()));
+ 
+--- a/volume-cartographer/core/src/normalgridtools.cpp
++++ b/volume-cartographer/core/src/normalgridtools.cpp
+@@ -1,4 +1,7 @@
+ #include "vc/core/util/GridStore.hpp"
++#include <algorithm>
++#include <cmath>
++#include <limits>
+ #include <random>
+ #include <optional>
+ #include <cstdint>
+@@ -14,7 +17,8 @@
+ long total_candidates_after_dedup = 0;
+ long nearest_neighbors_calls = 0;
+ 
+-cv::Vec2f align_and_extract_umbilicus(const GridStore& grid_store, std::optional<std::uint32_t> seed) {
++cv::Vec2f align_and_extract_umbilicus(const GridStore& grid_store, std::optional<std::uint32_t> seed,
++                                      float uncrush) {
+     auto segments = grid_store.get_all();
+     if (segments.empty()) {
+         return cv::Vec2f(std::numeric_limits<float>::quiet_NaN(), std::numeric_limits<float>::quiet_NaN());
+@@ -44,6 +48,63 @@
+         return cv::Vec2f(std::numeric_limits<float>::quiet_NaN(), std::numeric_limits<float>::quiet_NaN());
+     }
+ 
++    // 3b. Optional un-crush. The score below looks for the point the sheet normals point at,
++    // which is the centre of round windings but not of crushed ones: the normals of an ellipse
++    // do not point at its centre. With uncrush = beta > 0 the section is first stretched back
++    // towards round, by the anisotropy of its normals and not of its extent. The axial
++    // orientation tensor of the unit segment normals, T = sum n n^T, is round for a round section
++    // that spans half a turn or more, however unevenly it is sampled, so then next to nothing
++    // changes; on a crushed section the normals crowd across its flat sides, and x' = W (x - mu) with
++    // W = diag((t_i / t_mean)^(beta / 2)) V^T stretches it along that direction. The normals are
++    // carried by the inverse transpose of W, the search runs in that frame over the bounds of the
++    // transformed midpoints, and its result is mapped back with W^-1. uncrush = 0 is the
++    // estimator unchanged, draw for draw.
++    double w00 = 1.0, w01 = 0.0, w10 = 0.0, w11 = 1.0;   // W, row major
++    double mu_x = 0.0, mu_y = 0.0;
++    bool whiten = false;
++    if (uncrush > 0.0f) {
++        const double n = (double)all_line_segments.size();
++        for (const auto& s : all_line_segments) {
++            mu_x += 0.5 * (s.first.x + s.second.x);
++            mu_y += 0.5 * (s.first.y + s.second.y);
++        }
++        mu_x /= n;
++        mu_y /= n;
++        double txx = 0.0, txy = 0.0, tyy = 0.0;
++        for (const auto& s : all_line_segments) {
++            const double tx = s.second.x - s.first.x, ty = s.second.y - s.first.y;
++            const double len = std::hypot(tx, ty);
++            if (len <= 0.0) continue;
++            const double nx = -ty / len, ny = tx / len;
++            txx += nx * nx;
++            txy += nx * ny;
++            tyy += ny * ny;
++        }
++        // Eigen decomposition of the symmetric 2 x 2 tensor, in closed form. Only the ratios of
++        // the eigenvalues are used, so it is not divided by the number of segments.
++        const double half_trace = 0.5 * (txx + tyy);
++        const double r = std::hypot(0.5 * (txx - tyy), txy);
++        const double l1 = half_trace + r, l2 = half_trace - r;
++        if (l2 > 0.0) {
++            const double t = 0.5 * std::atan2(2.0 * txy, txx - tyy);   // where the normals crowd
++            const double f1 = std::pow(l1 / half_trace, 0.5 * uncrush);
++            const double f2 = std::pow(l2 / half_trace, 0.5 * uncrush);
++            w00 = f1 * std::cos(t);  w01 = f1 * std::sin(t);
++            w10 = -f2 * std::sin(t); w11 = f2 * std::cos(t);
++            whiten = true;
++            min_x = min_y = std::numeric_limits<float>::max();
++            max_x = max_y = std::numeric_limits<float>::lowest();
++            for (const auto& s : all_line_segments) {
++                const double dx = 0.5 * (s.first.x + s.second.x) - mu_x;
++                const double dy = 0.5 * (s.first.y + s.second.y) - mu_y;
++                const float wx = (float)(w00 * dx + w01 * dy), wy = (float)(w10 * dx + w11 * dy);
++                min_x = std::min(min_x, wx); max_x = std::max(max_x, wx);
++                min_y = std::min(min_y, wy); max_y = std::max(max_y, wy);
++            }
++        }
++    }
++    const double det = w00 * w11 - w01 * w10;
++
+     // 4. Pre-sample points and calculate normals for consistent scoring
+     std::vector<cv::Point2f> sample_points;
+     std::vector<cv::Vec2f> sample_normals;
+@@ -65,10 +126,20 @@
+         const auto& p2 = line_segment.second;
+ 
+         sample_points.emplace_back((float)(p1.x + p2.x) / 2.0f, (float)(p1.y + p2.y) / 2.0f);
+-        
++
+         cv::Vec2f tangent((float)(p2.x - p1.x), (float)(p2.y - p1.y));
+         cv::normalize(tangent, tangent);
+         sample_normals.emplace_back(-tangent[1], tangent[0]); // Perpendicular
++
++        if (whiten) {
++            const double dx = sample_points.back().x - mu_x, dy = sample_points.back().y - mu_y;
++            sample_points.back() = cv::Point2f((float)(w00 * dx + w01 * dy), (float)(w10 * dx + w11 * dy));
++            const cv::Vec2f nrm = sample_normals.back();   // a normal goes through W^-T
++            cv::Vec2f wn((float)((w11 * nrm[0] - w10 * nrm[1]) / det),
++                         (float)((-w01 * nrm[0] + w00 * nrm[1]) / det));
++            cv::normalize(wn, wn);
++            sample_normals.back() = wn;
++        }
+     }
+ 
+     // 4. RANSAC loop
+@@ -160,6 +231,12 @@
+         }
+     }
+ 
++    if (whiten) {   // back from the un-crushed frame, x = W^-1 x' + mu
++        const double ux = best_umbilicus[0], uy = best_umbilicus[1];
++        best_umbilicus = cv::Vec2f((float)((w11 * ux - w01 * uy) / det + mu_x),
++                                   (float)((-w10 * ux + w00 * uy) / det + mu_y));
++    }
++
+     std::cout << "Refined umbilicus estimate: " << best_umbilicus << " with score " << refined_best_score << std::endl;
+ 
+     return best_umbilicus;
+--- a/volume-cartographer/apps/src/vc_gen_umbilicus.cpp
++++ b/volume-cartographer/apps/src/vc_gen_umbilicus.cpp
+@@ -209,6 +209,10 @@
+         ("seed", po::value<std::uint32_t>(),
+             "Base seed. Slice z repeat r uses seed + z + 1000 * r, so a run repeats exactly. "
+             "Without it the library's shared hardware seeded generator is used, as published")
++        ("uncrush", po::value<double>()->default_value(0.0),
++            "Un-crush strength for crushed scrolls: each slice is stretched along the axis its "
++            "segment normals crowd towards before the search, and round slices are left as they "
++            "are. 0 is the estimator unchanged; 1.5 is the measured setting")
+         ("repeats", po::value<int>()->default_value(1),
+             "Estimates per slice. The control point written is their coordinatewise median")
+         ("threads", po::value<int>()->default_value(1),
+@@ -254,6 +258,7 @@
+     const int level = vm["level"].as<int>();
+     const int repeats = vm["repeats"].as<int>();
+     const int threads = vm["threads"].as<int>();
++    const double uncrush = vm["uncrush"].as<double>();
+     const std::optional<std::uint32_t> baseSeed =
+         vm.count("seed") ? std::optional<std::uint32_t>(vm["seed"].as<std::uint32_t>())
+                          : std::nullopt;
+@@ -262,6 +267,10 @@
+         std::cerr << "Error: --repeats must be at least 1." << std::endl;
+         return EXIT_FAILURE;
+     }
++    if (!(uncrush >= 0.0 && uncrush <= 4.0)) {
++        std::cerr << "Error: --uncrush must be between 0 and 4." << std::endl;
++        return EXIT_FAILURE;
++    }
+     if (threads < 1) {
+         std::cerr << "Error: --threads must be at least 1." << std::endl;
+         return EXIT_FAILURE;
+@@ -402,7 +411,7 @@
+                     e.seed = static_cast<std::uint32_t>(*baseSeed + slice +
+                                                         1000 * static_cast<std::uint32_t>(task.repeat));
+                 }
+-                e.point = align_and_extract_umbilicus(*grid, e.seed);
++                e.point = align_and_extract_umbilicus(*grid, e.seed, static_cast<float>(uncrush));
+                 if (std::isnan(e.point[0]) || std::isnan(e.point[1])) {
+                     std::lock_guard<std::mutex> lock(reportMutex);
+                     std::cerr << "slice " << slice << ": no segments, skipped" << std::endl;
+@@ -493,6 +502,7 @@
+     metadata["plane"] = "xy";
+     metadata["coordinate_scale"] = coordinateScale;
+     metadata["repeats"] = repeats;
++    metadata["uncrush"] = uncrush;
+     if (baseSeed) {
+         metadata["seed"] = static_cast<int64_t>(*baseSeed);
+     }
+--- a/volume-cartographer/core/test/test_normalgridtools.cpp
++++ b/volume-cartographer/core/test/test_normalgridtools.cpp
+@@ -369,3 +369,89 @@
+             "refinement score has changed.");
+     }
+ }
++
++// ---------------------------------------------------------------------------------------------
++// The un-crush option, uncrush = beta > 0. Three cases.
++//
++//   6. "uncrush 0 is the estimator unchanged"      the default must not move a single draw.
++//   7. "a crushed half section"                    what the option is for: on ellipses the
++//      normals do not point at the centre, and stretching the section back first brings the
++//      estimate back towards it.
++//   8. "a round half section"                      what it must not do: a section that is round
++//      but partial has normals spread evenly over half a turn, so its orientation tensor is
++//      round and the option has to leave the estimate where it was. Stretching by the spread of
++//      the midpoints instead fails this case (2.42 to 4.58 mm median), which is why the
++//      normals and not the midpoints drive it.
++//
++// The crushed sections are the sections of cases 2 to 4 with every y offset from the centre
++// divided by a squash factor, so a circle of radius r becomes an ellipse with semi axes r and
++// r / squash. Measured over seeds 1 to 20 (g++ 13, libstdc++, -O2), errors in mm:
++//
++//   section                      uncrush 0 median / p90 / max    uncrush 1.5 median / p90 / max
++//   crushed 2.5:1, half          2.42 / 2.59 / 6.12              0.85 / 1.02 / 1.23
++//   crushed 2.5:1, full          2.41 / 3.26 / 3.33              0.59 / 1.27 / 1.38
++//   crushed 4:1, full            4.10 / 6.92 / 7.03              0.75 / 0.92 / 0.95
++//   round, half (case 3)         2.42 / 3.71 / 3.98              2.41 / 3.52 / 3.99
++//   round, thinned 1:10 (case 4) 2.24 / 2.62 / 3.51              2.23 / 2.60 / 2.63
++//
++// On the crushed half section the worst of 20 seeds with the option, 1.23 mm, is better than the
++// best without it, 1.78 mm. On the round half section the option moves the estimate by 0.041 mm
++// on average over the 20 seeds, under 0.02 mm on 19 of them and 0.70 mm on one, where the climb
++// settles on a neighbouring maximum. Tolerances are 1.5 times the p90 (or the maximum, for the
++// move on the round section), rounded up, as above. On real scrolls the option
++// was measured on the published normal grids of 16 scrolls against manual umbilici; the numbers
++// are in the pull request.
++
++namespace {
++
++void addCrushedSection(GridStore& gs, double squash, double frac)
++{
++    for (double r = 300.0; r <= 3500.0; r += 80.0) {
++        const int n = std::max(8, (int)(2.0 * kPi * r / 12.0));
++        const int m = std::max(3, (int)(n * frac));
++        std::vector<cv::Point> pts;
++        pts.reserve(m);
++        for (int i = 0; i < m; ++i) {
++            const double th = frac >= 1.0 ? 2.0 * kPi * i / m : 2.0 * kPi * frac * i / (m - 1);
++            pts.emplace_back(cvRound(kCentreX + r * std::cos(th)),
++                             cvRound(kCentreY + r / squash * std::sin(th)));
++        }
++        for (int i = 0; i + 1 < m; ++i) {
++            gs.add({pts[i], pts[i + 1]});
++        }
++    }
++}
++
++} // namespace
++
++TEST_CASE("align_and_extract_umbilicus: uncrush 0 is the estimator unchanged")
++{
++    GridStore gs(cv::Rect(0, 0, kSide, kSide), 64);
++    addSyntheticSection(gs, 1.0, 10, 3u);
++    auto a = align_and_extract_umbilicus(gs, 7u);
++    auto b = align_and_extract_umbilicus(gs, 7u, 0.0f);
++    CHECK(a[0] == b[0]);
++    CHECK(a[1] == b[1]);
++}
++
++TEST_CASE("align_and_extract_umbilicus: a crushed half section, uncrush 1.5 stays under 1.6 mm")
++{
++    GridStore gs(cv::Rect(0, 0, kSide, kSide), 64);
++    addCrushedSection(gs, 2.5, 0.5);
++    auto unchanged = align_and_extract_umbilicus(gs, 1u);
++    auto uncrushed = align_and_extract_umbilicus(gs, 1u, 1.5f);
++    REQUIRE(insideGrid(uncrushed));
++    CHECK(errorMm(uncrushed) < 1.6);                  // 20 seed median 0.85 mm, p90 1.02 mm
++    CHECK(errorMm(uncrushed) < errorMm(unchanged));   // 20 seed range 0.74 to 1.23 against 1.78 to 6.12 mm
++}
++
++TEST_CASE("align_and_extract_umbilicus: a round half section, uncrush 1.5 moves the estimate under 1.1 mm")
++{
++    GridStore gs(cv::Rect(0, 0, kSide, kSide), 64);
++    addSyntheticSection(gs, 0.5, 1, 0);
++    auto unchanged = align_and_extract_umbilicus(gs, 1u);
++    auto uncrushed = align_and_extract_umbilicus(gs, 1u, 1.5f);
++    REQUIRE(insideGrid(uncrushed));
++    const double moved = std::hypot(uncrushed[0] - unchanged[0], uncrushed[1] - unchanged[1]) * kUnitMm;
++    CHECK(moved < 1.1);   // 20 seed mean 0.041 mm, max 0.70 mm; the midpoint version moves it 2 mm
++}
