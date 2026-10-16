@@ -131,9 +131,11 @@
     "hand": 0.77,
     "unc": 0.885,
     "orig": 0.822,
-    "shift": 0.87
+    "shift": 0.87,
+    "hand_rep": 0.7668,
+    "unc_rep": 0.8861
    },
-   "note": "pre-registered primary (w060 share) FAILED to order hand first; track points repeat band 1"
+   "note": "w060 share is reproducible (hand 0.770/0.767, unc 0.885/0.886) but ranks the shifted hand axis above the hand axis, so it does not order axes by distance to the annotator; track points repeat band 1"
   },
   "PHerc0358_core_z8700_9700": {
    "axis_mm_from_hand": {
