@@ -1,0 +1,66 @@
+Vesuvius November 2026: vc_gen_umbilicus whole-axis robust fit. Pre-registration.
+Written 2026-11-06, BEFORE any error of any fitted curve was computed, and before any per-slice error of a held-out
+scroll on this dense slice set was looked at. The raw estimates (run_raw.py) contain no reference comparison.
+
+WHY. vc_gen_umbilicus estimates each slice on its own and writes one control point per slice (the median of --repeats
+estimates; the default is 1). The estimator is randomised; its header says two runs on one slice differ by up to a few mm.
+A scroll axis is a continuous curve in z, so neighbouring slices carry information about each other that is thrown away.
+
+METHOD (one new opt-in option, off by default; output bit-identical without it):
+  --zfit H  (H in output z units, voxels of the frame the umbilicus is written in)
+  After all estimates are made, every estimate (every slice x every repeat) is a point (z, x, y). For each slice z0 the
+  control point becomes the value at z0 of a weighted local-linear fit of x(z) and y(z): weights tricube(|z - z0| / H)
+  times a robustness weight. Robustness: Cleveland's LOWESS, bisquare of the 2D residual norm over 6 x the median residual
+  norm, 3 iterations, starting from 1. A slice whose window holds fewer than 3 estimates keeps its raw median.
+  The raw estimates stay in --csv; metadata records "zfit": H.
+AMENDMENT (same day, still before any fit error): the window is physical. The evaluation sets H per scroll as
+H_mm / voxel size of the reference frame, so 2.4 um scans get the same window in mm as 9 um scans; the grid below is in
+voxels at 9.362 um = {2.34, 4.68, 9.36, 18.7, 37.4} mm. The CLI takes voxels (the tool does not always know the voxel
+size); the help text gives the mm rule.
+H is chosen on the 3 dev scrolls only (PHerc0358, PHerc1203, PHerc0191; the same dev set as PR #2123), from
+{250, 500, 1000, 2000, 4000} output voxels, as the value with the lowest dev median error at uncrush 1.5, repeats 1;
+ties within 0.02 mm go to the smaller H. Nothing else is tuned.
+
+DATA. Published m7 xy normal grids, one slice every 256 grid z (about 2.4 mm; Paris4 every 1024 at 2.4 um), over 2-98 %
+of each reference's z range: 962 slices on 16 scrolls. References: Drobkov's hand-made umbilici (10 scrolls; MIT) and
+the challenge's own published umbilici (6 scrolls: 0125, 0211, 0826, 0332, 1451, Paris4; 0139 excluded because its
+umbilicus is on another scan than its grids). Error = distance in mm in the slice plane from the reference (piecewise
+linear in z) at the slice's z. Estimator = villa main 66cb7c4 align_and_extract_umbilicus, OpenCV stand-in build on the
+Mac (known answer reproduced: PHerc1447 z 16030, 1.354 -> 0.290 mm, same as the merged PR).
+Held-out = 13 scrolls (7 Drobkov + 6 challenge).
+
+ARMS. uncrush 0 and 1.5; repeats 1 (the default: each seed 1..9 is one independent run of the tool; errors averaged over
+the 9 runs per slice) and repeats 9 (median of seeds 1..9, then the fit uses all 9 estimates).
+  RAW   = today's output.   FIT = --zfit H.
+  SABOTAGE = the same fit after shuffling the z labels of the slices within each scroll (fixed shuffle seed 7), so the
+  fit keeps the averaging but loses z continuity. If SABOTAGE matches FIT, the gain is shrinkage to the scroll's mean
+  centre, not axis continuity, and that is reported as the finding.
+
+PRIMARY ENDPOINT (slices within a scroll are correlated, more so after a fit, so the test is at scroll level):
+  per held-out scroll, the median slice error of FIT vs RAW at uncrush 1.5, repeats 1; one-sided Wilcoxon signed-rank
+  over the 13 scrolls.
+SHIP RULE (all must hold, uncrush 1.5 AND uncrush 0, repeats 1):
+  (a) median over the 13 per-scroll medians lower for FIT, scroll-level p < 0.05;
+  (b) no held-out scroll's median worse by more than 0.25 mm;
+  (c) FIT beats SABOTAGE on at least 9 of 13 held-out scrolls.
+Also reported, not part of the rule: repeats 9; the 90th percentile slice error; slice-level counts better/worse by
+> 0.05 mm; per-scroll table; the dev scrolls separately.
+If FIT fails the rule: report it plainly and do not build the PR around it; options go to Jude.
+Nothing is pushed, posted or filed without Jude's explicit yes.
+H chosen on dev by the pre-registered rule: 4.68 mm (dev median 1.650 vs RAW 1.820 at uncrush 1.5, repeats 1). Fri Nov  6 16:12:38 UTC 2026
+
+RESULT (held-out, 2026-11-06 16:13 UTC), repeats 1: uncrush 1.5 RAW 1.294 -> FIT 1.034 mm, p 0.0052, worst +0.243 (0813),
+FIT beats SAB 13/13: PASS. uncrush 0 RAW 2.111 -> FIT 1.631 mm, p 0.00024, worst +0.011: PASS. repeats 9 (not in the rule):
+1.163 -> 0.998 (p 0.084) and 1.726 -> 1.472 (p 0.040). Full log: data/final_4.68.log.
+
+REPLICATION, pre-registered before it is run: fresh slices at grid z = 128 + 256 k (none shared with the first set; Paris4
+512 + 1024 k), seeds 11..19, H fixed at 4.68 mm, the same script and the same ship rule on the same 13 held-out scrolls.
+It counts as replicated if the rule passes at uncrush 1.5 AND at uncrush 0 again. Otherwise the claim is reported with
+that failure.
+
+REPLICATION RESULT (2026-11-06 16:25 UTC; 954 new slices, 781 held-out; seeds 11..19; log data_rep/final_4.68.log):
+  uncrush 1.5, repeats 1: RAW 1.363 -> FIT 1.074 mm, p 0.0040, worst +0.038, FIT beats SAB 13/13: PASS (replicated).
+  uncrush 0,   repeats 1: RAW 1.953 -> FIT 1.621 mm, p 0.034, worst +0.348 (PHerc0268; 0826 +0.263): FAIL on (b).
+  So the pre-registered "replicated at both settings" is NOT met. The claim is made for --uncrush 1.5 only. At uncrush 0
+  the median gain replicates, but two scrolls that are already 4.4-4.9 mm off get worse by 0.26-0.35 mm.
+  repeats 9 (not in rule): 1.5: 1.140 -> 0.996 (p 0.029); 0: 1.797 -> 1.495 (p 0.0067, worst +0.344).

@@ -1,0 +1,80 @@
+
+== uncrush 1.5, repeats 1, H 4.68 mm, held-out 13 scrolls ==
+median of scroll medians: RAW 1.294  FIT 1.034  SAB 7.981 mm | scroll Wilcoxon p 0.005249 | worst scroll +0.243 mm | FIT beats SAB on 13/13 | RULE PASS
+slices n=788: median RAW 1.208 FIT 1.036 SAB 6.591; p90 RAW 5.228 FIT 4.878; better 450 worse 211
+  PHerc0125    test challenge0 n= 69  RAW 1.060  FIT 0.772  SAB 2.179
+  PHerc0211    test challenge0 n= 63  RAW 0.579  FIT 0.612  SAB 8.890
+  PHerc0826    test challenge0 n= 54  RAW 2.499  FIT 2.143  SAB 9.268
+  PHerc0332    test challenge0 n= 29  RAW 0.323  FIT 0.338  SAB 1.252
+  PHerc1451    test challenge0 n= 50  RAW 0.650  FIT 0.613  SAB 1.774
+  PHercParis4  test challenge0 n= 66  RAW 0.867  FIT 0.691  SAB 7.981
+  PHerc0191    dev  drobkov    n= 63  RAW 3.463  FIT 3.026  SAB 6.294
+  PHerc0257    test drobkov    n= 60  RAW 1.611  FIT 1.311  SAB 6.052
+  PHerc0268    test drobkov    n= 32  RAW 5.165  FIT 5.042  SAB 11.616
+  PHerc0358    dev  drobkov    n= 48  RAW 1.968  FIT 2.039  SAB 9.256
+  PHerc0800    test drobkov    n= 80  RAW 1.593  FIT 1.402  SAB 9.094
+  PHerc0813    test drobkov    n= 56  RAW 2.029  FIT 2.273  SAB 12.311
+  PHerc1203    dev  drobkov    n= 63  RAW 1.054  FIT 1.098  SAB 5.490
+  PHerc1218    test drobkov    n= 78  RAW 1.662  FIT 1.258  SAB 5.500
+  PHerc1447    test drobkov    n= 80  RAW 1.116  FIT 0.783  SAB 7.389
+  PHerc1545    test drobkov    n= 71  RAW 1.294  FIT 1.034  SAB 8.963
+
+== uncrush 1.5, repeats 9, H 4.68 mm, held-out 13 scrolls ==
+median of scroll medians: RAW 1.163  FIT 0.998  SAB 7.972 mm | scroll Wilcoxon p 0.08386 | worst scroll +0.409 mm | FIT beats SAB on 13/13
+slices n=788: median RAW 1.054 FIT 0.965 SAB 6.587; p90 RAW 4.905 FIT 4.519; better 399 worse 285
+  PHerc0125    test challenge0 n= 69  RAW 0.861  FIT 0.703  SAB 1.930
+  PHerc0211    test challenge0 n= 63  RAW 0.494  FIT 0.556  SAB 8.888
+  PHerc0826    test challenge0 n= 54  RAW 2.086  FIT 1.885  SAB 9.194
+  PHerc0332    test challenge0 n= 29  RAW 0.323  FIT 0.352  SAB 1.179
+  PHerc1451    test challenge0 n= 50  RAW 0.626  FIT 0.643  SAB 1.772
+  PHercParis4  test challenge0 n= 66  RAW 0.681  FIT 0.573  SAB 7.972
+  PHerc0191    dev  drobkov    n= 63  RAW 3.285  FIT 3.044  SAB 6.134
+  PHerc0257    test drobkov    n= 60  RAW 1.377  FIT 1.206  SAB 6.090
+  PHerc0268    test drobkov    n= 32  RAW 4.315  FIT 4.724  SAB 11.697
+  PHerc0358    dev  drobkov    n= 48  RAW 1.747  FIT 1.836  SAB 9.232
+  PHerc0800    test drobkov    n= 80  RAW 1.443  FIT 1.368  SAB 9.040
+  PHerc0813    test drobkov    n= 56  RAW 1.924  FIT 2.065  SAB 12.307
+  PHerc1203    dev  drobkov    n= 63  RAW 1.046  FIT 1.017  SAB 5.396
+  PHerc1218    test drobkov    n= 78  RAW 1.608  FIT 1.236  SAB 5.489
+  PHerc1447    test drobkov    n= 80  RAW 0.820  FIT 0.673  SAB 7.381
+  PHerc1545    test drobkov    n= 71  RAW 1.163  FIT 0.998  SAB 8.956
+
+== uncrush 0, repeats 1, H 4.68 mm, held-out 13 scrolls ==
+median of scroll medians: RAW 2.111  FIT 1.631  SAB 8.201 mm | scroll Wilcoxon p 0.0002441 | worst scroll +0.011 mm | FIT beats SAB on 13/13 | RULE PASS
+slices n=788: median RAW 1.738 FIT 1.516 SAB 6.826; p90 RAW 6.422 FIT 5.847; better 479 worse 203
+  PHerc0125    test challenge0 n= 69  RAW 2.114  FIT 1.734  SAB 2.598
+  PHerc0211    test challenge0 n= 63  RAW 1.157  FIT 0.990  SAB 8.568
+  PHerc0826    test challenge0 n= 54  RAW 4.701  FIT 4.672  SAB 10.082
+  PHerc0332    test challenge0 n= 29  RAW 0.332  FIT 0.343  SAB 1.273
+  PHerc1451    test challenge0 n= 50  RAW 0.635  FIT 0.582  SAB 1.659
+  PHercParis4  test challenge0 n= 66  RAW 1.104  FIT 0.986  SAB 8.201
+  PHerc0191    dev  drobkov    n= 63  RAW 3.800  FIT 3.387  SAB 6.532
+  PHerc0257    test drobkov    n= 60  RAW 2.111  FIT 1.716  SAB 6.248
+  PHerc0268    test drobkov    n= 32  RAW 5.508  FIT 4.953  SAB 12.709
+  PHerc0358    dev  drobkov    n= 48  RAW 3.149  FIT 2.961  SAB 9.284
+  PHerc0800    test drobkov    n= 80  RAW 2.140  FIT 1.829  SAB 8.603
+  PHerc0813    test drobkov    n= 56  RAW 2.531  FIT 2.210  SAB 12.229
+  PHerc1203    dev  drobkov    n= 63  RAW 1.309  FIT 1.355  SAB 5.047
+  PHerc1218    test drobkov    n= 78  RAW 2.191  FIT 1.631  SAB 5.627
+  PHerc1447    test drobkov    n= 80  RAW 1.596  FIT 1.317  SAB 7.205
+  PHerc1545    test drobkov    n= 71  RAW 1.954  FIT 1.627  SAB 8.913
+
+== uncrush 0, repeats 9, H 4.68 mm, held-out 13 scrolls ==
+median of scroll medians: RAW 1.726  FIT 1.472  SAB 8.228 mm | scroll Wilcoxon p 0.04016 | worst scroll +0.107 mm | FIT beats SAB on 13/13
+slices n=788: median RAW 1.493 FIT 1.366 SAB 6.745; p90 RAW 6.517 FIT 5.690; better 407 worse 297
+  PHerc0125    test challenge0 n= 69  RAW 1.654  FIT 1.627  SAB 2.488
+  PHerc0211    test challenge0 n= 63  RAW 0.852  FIT 0.918  SAB 8.566
+  PHerc0826    test challenge0 n= 54  RAW 4.524  FIT 4.531  SAB 10.059
+  PHerc0332    test challenge0 n= 29  RAW 0.324  FIT 0.353  SAB 1.161
+  PHerc1451    test challenge0 n= 50  RAW 0.621  FIT 0.580  SAB 1.656
+  PHercParis4  test challenge0 n= 66  RAW 0.912  FIT 0.878  SAB 8.228
+  PHerc0191    dev  drobkov    n= 63  RAW 3.035  FIT 3.114  SAB 6.529
+  PHerc0257    test drobkov    n= 60  RAW 1.853  FIT 1.730  SAB 6.340
+  PHerc0268    test drobkov    n= 32  RAW 4.795  FIT 4.902  SAB 12.682
+  PHerc0358    dev  drobkov    n= 48  RAW 2.473  FIT 2.614  SAB 9.440
+  PHerc0800    test drobkov    n= 80  RAW 1.845  FIT 1.763  SAB 8.580
+  PHerc0813    test drobkov    n= 56  RAW 2.198  FIT 2.151  SAB 12.199
+  PHerc1203    dev  drobkov    n= 63  RAW 1.139  FIT 1.134  SAB 4.911
+  PHerc1218    test drobkov    n= 78  RAW 1.938  FIT 1.446  SAB 5.593
+  PHerc1447    test drobkov    n= 80  RAW 1.457  FIT 1.254  SAB 7.132
+  PHerc1545    test drobkov    n= 71  RAW 1.726  FIT 1.472  SAB 8.898
